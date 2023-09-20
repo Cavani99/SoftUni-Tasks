@@ -1,24 +1,20 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void  CharsToString() {
+    public static void  ReversedChars() {
         Scanner sc = new Scanner(System.in);
 
-        String input = "";
+
         char first= sc.nextLine().charAt(0);
-        input+=first;
         char second= sc.nextLine().charAt(0);
-        input+=second;
         char third= sc.nextLine().charAt(0);
-        input+=third;
 
 
-
-        System.out.println(input);
+        System.out.printf("%c %c %c",third,second,first);
 
     }
 
     public static void main(String[] args) {
-        CharsToString();
+        ReversedChars();
     }
 }
