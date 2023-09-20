@@ -4,11 +4,18 @@ public class Main {
     public static void  CharsToString() {
         Scanner sc = new Scanner(System.in);
 
-        String firstName= sc.nextLine();
-        String lastName= sc.nextLine();
-        String delimiter= sc.nextLine();
+        String input = "";
+        char first= sc.nextLine().charAt(0);
+        input+=first;
+        char second= sc.nextLine().charAt(0);
+        input+=second;
+        char third= sc.nextLine().charAt(0);
+        input+=third;
 
-        System.out.println(firstName+delimiter+lastName);
+
+
+        System.out.println(input);
+
     }
 
     public static void main(String[] args) {
