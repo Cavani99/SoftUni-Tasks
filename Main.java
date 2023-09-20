@@ -1,7 +1,7 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void  ConcatNames() {
+    public static void  CharsToString() {
         Scanner sc = new Scanner(System.in);
 
         String firstName= sc.nextLine();
@@ -12,6 +12,6 @@ public class Main {
     }
 
     public static void main(String[] args) {
-        ConcatNames();
+        CharsToString();
     }
 }
