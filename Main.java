@@ -1,32 +1,30 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void  SpecialNumbers() {
+    public static void  RefactorVolumeofPyramid() {
         Scanner sc = new Scanner(System.in);
 
-        int numbers=Integer.parseInt(sc.nextLine());
 
-        for(int i=1;i<=numbers;i++){
-            int sum=0;
-            int digits=i;
-            while(digits>0){
-                sum+=digits%10;
-                digits=digits/10;
-            }
+        System.out.print("Length: ");
 
-            if(sum==5 || sum==7 || sum==11){
-                System.out.printf("%d -> True\n",i);
-            }else{
-                System.out.printf("%d -> False\n",i);
-            }
+        double length = Double.parseDouble(sc.nextLine());
 
-        }
+        System.out.print("Width: ");
+
+        double width = Double.parseDouble(sc.nextLine());
+
+        System.out.print("Height: ");
+
+        double height = Double.parseDouble(sc.nextLine());
+
+
+        System.out.printf("Pyramid Volume: %.2f", (length * width * height) / 3);
 
 
     }
 
 
     public static void main(String[] args) {
-        SpecialNumbers();
+        RefactorVolumeofPyramid();
     }
 }
