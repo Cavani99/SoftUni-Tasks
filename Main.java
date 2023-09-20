@@ -1,17 +1,22 @@
+import java.math.BigDecimal;
 import java.util.Scanner;
 
 public class Main {
-    public static void  PoundstoDollars() {
+    public static void  ExactSumofRealNumbers() {
         Scanner sc = new Scanner(System.in);
 
-        int pounds= Integer.parseInt(sc.nextLine());
+        int numbers= Integer.parseInt(sc.nextLine());
+        BigDecimal sum = BigDecimal.valueOf(0);
 
-        double dollars= (double) pounds*1.36;
+         for(int i=1;i<=numbers;i++){
+             BigDecimal decimal= new BigDecimal(sc.nextLine());
+             sum=sum.add(decimal);
+         }
 
-        System.out.printf("%.3f",dollars);
+        System.out.println(sum);
     }
 
     public static void main(String[] args) {
-        PoundstoDollars();
+        ExactSumofRealNumbers();
     }
 }
