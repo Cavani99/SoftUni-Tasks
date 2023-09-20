@@ -1,17 +1,17 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void  ConvertMetersToKilometers() {
+    public static void  PoundstoDollars() {
         Scanner sc = new Scanner(System.in);
 
-        int meters= Integer.parseInt(sc.nextLine());
+        int pounds= Integer.parseInt(sc.nextLine());
 
-        double kMeters= (double) meters/1000;
+        double dollars= (double) pounds*1.36;
 
-        System.out.printf("%.2f",kMeters);
+        System.out.printf("%.3f",dollars);
     }
 
     public static void main(String[] args) {
-        ConvertMetersToKilometers();
+        PoundstoDollars();
     }
 }
