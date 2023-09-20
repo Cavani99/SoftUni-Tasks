@@ -1,22 +1,32 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void  CenturiestoMinutes() {
+    public static void  SpecialNumbers() {
         Scanner sc = new Scanner(System.in);
 
-        int centuries=Integer.parseInt(sc.nextLine());
-        double years=centuries*100;
-        double days= years*365.2422;
-        double hours=days*24;
-        double minutes=hours*60;
+        int numbers=Integer.parseInt(sc.nextLine());
 
-        System.out.printf("%d centuries = %.0f years = %.0f days " +
-                "= %.0f hours = %.0f minutes",centuries,years,days,hours,minutes);
+        for(int i=1;i<=numbers;i++){
+            int sum=0;
+            int digits=i;
+            while(digits>0){
+                sum+=digits%10;
+                digits=digits/10;
+            }
+
+            if(sum==5 || sum==7 || sum==11){
+                System.out.printf("%d -> True\n",i);
+            }else{
+                System.out.printf("%d -> False\n",i);
+            }
+
+        }
+
 
     }
 
 
     public static void main(String[] args) {
-        CenturiestoMinutes();
+        SpecialNumbers();
     }
 }
