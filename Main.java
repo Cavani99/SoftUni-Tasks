@@ -1,35 +1,24 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void  RefactorSpecialNumbers() {
+    public static void IntegerOperations() {
         Scanner sc = new Scanner(System.in);
 
-        int numbers = Integer.parseInt(sc.nextLine());
+        int number1 = Integer.parseInt(sc.nextLine());
+        int number2 = Integer.parseInt(sc.nextLine());
+        int number3 = Integer.parseInt(sc.nextLine());
+        int number4 = Integer.parseInt(sc.nextLine());
 
-        for (int index = 1; index <= numbers; index++) {
+        int sum=number1 + number2;
+        sum/=number3;
+        sum*=number4;
 
-            int sum = 0;
-            int digit = index;
-
-            while (index > 0) {
-                sum += index % 10;
-                index = index / 10;
-            }
-
-            boolean isSpecialNum = (sum == 5) || (sum == 7) || (sum == 11);
-            if(isSpecialNum)
-                System.out.printf("%d -> True\n", digit);
-            else
-                System.out.printf("%d -> False\n", digit);
-
-            index=digit;
-        }
-
+        System.out.println(sum);
 
     }
 
 
     public static void main(String[] args) {
-        RefactorSpecialNumbers();
+        IntegerOperations();
     }
 }
