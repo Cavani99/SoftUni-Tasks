@@ -1,23 +1,28 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void SumDigits() {
+    public static void Elevator() {
         Scanner sc = new Scanner(System.in);
 
-        int number = Integer.parseInt(sc.nextLine());
+        int numberOfPeople = Integer.parseInt(sc.nextLine());
+        int capacity= Integer.parseInt(sc.nextLine());
 
-        String input= String.valueOf(number);
-        int sum=0;
 
-        for(int i=0;i<=input.length()-1;i++){
-            int index=Integer.parseInt(String.valueOf(input.charAt(i)));
-            sum+=index;
+        if(capacity>=numberOfPeople){
+            System.out.println(1);
+        }else if(numberOfPeople % capacity == 0){
+            int fullCourses= numberOfPeople/capacity;
+            System.out.println(fullCourses);
+        }else{
+            int fullCourses= numberOfPeople/capacity;
+            System.out.println(fullCourses+1);
         }
-        System.out.println(sum);
+
+
     }
 
 
     public static void main(String[] args) {
-        SumDigits();
+        Elevator();
     }
 }
