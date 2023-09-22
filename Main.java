@@ -1,28 +1,23 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void Elevator() {
+    public static void SumOfChars() {
         Scanner sc = new Scanner(System.in);
 
-        int numberOfPeople = Integer.parseInt(sc.nextLine());
-        int capacity= Integer.parseInt(sc.nextLine());
+        int characters = Integer.parseInt(sc.nextLine());
 
+        int sum=0;
+        for(int i=1;i<=characters;i++){
+            char ch=sc.nextLine().charAt(0);
+            sum+=ch;
 
-        if(capacity>=numberOfPeople){
-            System.out.println(1);
-        }else if(numberOfPeople % capacity == 0){
-            int fullCourses= numberOfPeople/capacity;
-            System.out.println(fullCourses);
-        }else{
-            int fullCourses= numberOfPeople/capacity;
-            System.out.println(fullCourses+1);
         }
-
+        System.out.printf("The sum equals: %d",sum);
 
     }
 
 
     public static void main(String[] args) {
-        Elevator();
+        SumOfChars();
     }
 }
