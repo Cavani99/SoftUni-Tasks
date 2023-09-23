@@ -1,33 +1,28 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void BeerKegs() {
+    public static void SpiceMustFlow() {
         Scanner sc = new Scanner(System.in);
 
-        int beerKegs = Integer.parseInt(sc.nextLine());
+        int startingYield = Integer.parseInt(sc.nextLine());
 
-        String bestModel="";
-        double bestVolume=0;
-        for(int i=1;i<=beerKegs;i++){
-            String model=sc.nextLine();
-            double radius=Double.parseDouble(sc.nextLine());
-            int height=Integer.parseInt(sc.nextLine());
-
-            double volume= Math.PI* radius*radius *height;
-            if(volume>bestVolume){
-                bestModel=model;
-                bestVolume=volume;
-            }
+        int daysOperated=0;
+        int spiceExtracted=0;
 
 
-
+        while(startingYield>=100){
+            spiceExtracted+=startingYield-26;
+            startingYield-=10;
+            daysOperated++;
         }
-        System.out.println(bestModel);
+
+        System.out.println(daysOperated);
+        System.out.println(Math.max(spiceExtracted - 26, 0));
 
     }
 
 
     public static void main(String[] args) {
-        BeerKegs();
+        SpiceMustFlow();
     }
 }
