@@ -1,38 +1,36 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void Snowballs() {
+    public static void DataTypeFinder() {
         Scanner sc = new Scanner(System.in);
 
-        int snowBalls = Integer.parseInt(sc.nextLine());
-
-        double bestSnowValue=0;
-        int bestSnowballSnow=0;
-        int bestSnowballTime=0;
-        int bestSnowballQuality=0;
-        for(int i=1;i<=snowBalls;i++){
-            int snowballSnoW =Integer.parseInt(sc.nextLine());
-            int snowballTime =Integer.parseInt(sc.nextLine());
-            int snowballQuality =Integer.parseInt(sc.nextLine());
-
-            double snowValue=Math.pow(snowballSnoW/snowballTime,snowballQuality);
+        String input=sc.nextLine();
+        while(!input.equals("END")) {
 
 
-            if(snowValue>bestSnowValue){
-                bestSnowballSnow=snowballSnoW;
-                bestSnowballTime=snowballTime;
-                bestSnowballQuality=snowballQuality;
-                bestSnowValue=snowValue;
-            }
+            if(input.matches("-?\\d+")){
+                System.out.printf("%s is integer type\n", input);
+            }else if(input.matches("-?\\d+[.]\\d+")){
+                System.out.printf("%s is floating point type\n", input);
+            }else if(input.length()==1){
+                System.out.printf("%s is character type\n", input);
+            }else if(input.equalsIgnoreCase("true")|| input.equalsIgnoreCase("false")){
+                System.out.printf("%s is boolean type\n", input);
+            }else
+                System.out.printf("%s is string type\n", input);
 
+
+
+            input = sc.nextLine();
         }
-        System.out.printf("%d : %d = %.0f (%d)",bestSnowballSnow,bestSnowballTime,bestSnowValue,bestSnowballQuality);
+
+
 
 
     }
 
 
     public static void main(String[] args) {
-        Snowballs();
+        DataTypeFinder();
     }
 }
