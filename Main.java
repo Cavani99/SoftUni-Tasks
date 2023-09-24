@@ -1,44 +1,38 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void PokeMon() {
+    public static void Snowballs() {
         Scanner sc = new Scanner(System.in);
 
-        int pokePower = Integer.parseInt(sc.nextLine());
-        int distanceBetweenTargets = Integer.parseInt(sc.nextLine());
-        int exhaustionFactor = Integer.parseInt(sc.nextLine());
+        int snowBalls = Integer.parseInt(sc.nextLine());
 
-        int pokes=0;
-        int pokeOriginal=pokePower;
+        double bestSnowValue=0;
+        int bestSnowballSnow=0;
+        int bestSnowballTime=0;
+        int bestSnowballQuality=0;
+        for(int i=1;i<=snowBalls;i++){
+            int snowballSnoW =Integer.parseInt(sc.nextLine());
+            int snowballTime =Integer.parseInt(sc.nextLine());
+            int snowballQuality =Integer.parseInt(sc.nextLine());
 
-        while(pokePower>=distanceBetweenTargets) {
-            int subtract = pokePower-distanceBetweenTargets;
-            if(subtract>=0)
-                pokes++;
-            else
-                break;
-            pokePower-=distanceBetweenTargets;
+            double snowValue=Math.pow(snowballSnoW/snowballTime,snowballQuality);
 
-            if(pokeOriginal/2 == pokePower){
 
-                if( exhaustionFactor != 0){
-                    pokePower/=exhaustionFactor;
-                }
-
+            if(snowValue>bestSnowValue){
+                bestSnowballSnow=snowballSnoW;
+                bestSnowballTime=snowballTime;
+                bestSnowballQuality=snowballQuality;
+                bestSnowValue=snowValue;
             }
 
         }
-
-        System.out.println(pokePower);
-        System.out.println(pokes);
-
-
+        System.out.printf("%d : %d = %.0f (%d)",bestSnowballSnow,bestSnowballTime,bestSnowValue,bestSnowballQuality);
 
 
     }
 
 
     public static void main(String[] args) {
-        PokeMon();
+        Snowballs();
     }
 }
