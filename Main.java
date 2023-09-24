@@ -1,28 +1,44 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void SpiceMustFlow() {
+    public static void PokeMon() {
         Scanner sc = new Scanner(System.in);
 
-        int startingYield = Integer.parseInt(sc.nextLine());
+        int pokePower = Integer.parseInt(sc.nextLine());
+        int distanceBetweenTargets = Integer.parseInt(sc.nextLine());
+        int exhaustionFactor = Integer.parseInt(sc.nextLine());
 
-        int daysOperated=0;
-        int spiceExtracted=0;
+        int pokes=0;
+        int pokeOriginal=pokePower;
 
+        while(pokePower>=distanceBetweenTargets) {
+            int subtract = pokePower-distanceBetweenTargets;
+            if(subtract>=0)
+                pokes++;
+            else
+                break;
+            pokePower-=distanceBetweenTargets;
 
-        while(startingYield>=100){
-            spiceExtracted+=startingYield-26;
-            startingYield-=10;
-            daysOperated++;
+            if(pokeOriginal/2 == pokePower){
+
+                if( exhaustionFactor != 0){
+                    pokePower/=exhaustionFactor;
+                }
+
+            }
+
         }
 
-        System.out.println(daysOperated);
-        System.out.println(Math.max(spiceExtracted - 26, 0));
+        System.out.println(pokePower);
+        System.out.println(pokes);
+
+
+
 
     }
 
 
     public static void main(String[] args) {
-        SpiceMustFlow();
+        PokeMon();
     }
 }
