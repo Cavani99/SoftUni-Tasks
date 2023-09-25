@@ -1,26 +1,38 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void DecryptingMessage() {
+    public static void BalancedBrackets() {
         Scanner sc = new Scanner(System.in);
 
-        int key = Integer.parseInt(sc.nextLine());
         int lines = Integer.parseInt(sc.nextLine());
 
-        String message="";
+        String input;
+        boolean isUnbalanced=false;
+        int openBrackets=0;
+        int closeBrackets=0;
         for(int i=1;i<=lines;i++){
-            char ch=sc.nextLine().charAt(0);
-            ch+=key;
-            message+=ch;
-        }
-        System.out.println(message);
+            input= sc.nextLine();
 
+            if(input.equals("(")){
+                 openBrackets++;
+            }
+            else if (input.equals(")")) {
+                closeBrackets++;
+                if(closeBrackets>openBrackets)
+                 isUnbalanced=true;
+            }
+        }
+
+        if(!isUnbalanced && openBrackets==closeBrackets)
+            System.out.println("BALANCED");
+        else
+            System.out.println("UNBALANCED");
 
 
     }
 
 
     public static void main(String[] args) {
-        DecryptingMessage();
+        BalancedBrackets();
     }
 }
