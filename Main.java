@@ -1,21 +1,19 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void SumEvenNumbers() {
+    public static void ReverseArrayOfStrings() {
         Scanner sc = new Scanner(System.in);
 
-        int [] numbers= Arrays
-                .stream(sc.nextLine().split(" "))
-                .mapToInt(e -> Integer.parseInt(e))
-                .toArray();
+       String [] characters =sc.nextLine().split(" ");
 
-        int sum=0;
-        for(int i=0;i<numbers.length;i++){
-            if(numbers[i] % 2 ==0)
-                sum+=numbers[i];
-        }
-        System.out.println(sum);
+       for(int i=0;i<characters.length/2;i++){
+           String oldElement=characters[i];
+           characters[i]=characters[characters.length-1-i];
+           characters[characters.length-1-i]=oldElement;
+
+       }
+        System.out.println(String.join(" ",characters));
+
 
 
 
@@ -23,6 +21,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        SumEvenNumbers();
+        ReverseArrayOfStrings();
     }
 }
