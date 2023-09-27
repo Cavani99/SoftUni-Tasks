@@ -1,26 +1,31 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void ReverseArrayOfStrings() {
+    public static void EvenAndOddSubtraction() {
         Scanner sc = new Scanner(System.in);
 
-       String [] characters =sc.nextLine().split(" ");
+        int [] numbers= Arrays
+                .stream(sc.nextLine().split(" "))
+                .mapToInt(e -> Integer.parseInt(e))
+                .toArray();
 
-       for(int i=0;i<characters.length/2;i++){
-           String oldElement=characters[i];
-           characters[i]=characters[characters.length-1-i];
-           characters[characters.length-1-i]=oldElement;
+        int sumEven=0;
+        int sumOdd=0;
+        for (int number : numbers) {
+            if (number % 2 == 0)
+                sumEven += number;
+            else
+                sumOdd += number;
+        }
 
-       }
-        System.out.println(String.join(" ",characters));
-
-
+        System.out.println(sumEven-sumOdd);
 
 
     }
 
 
     public static void main(String[] args) {
-        ReverseArrayOfStrings();
+        EvenAndOddSubtraction();
     }
 }
