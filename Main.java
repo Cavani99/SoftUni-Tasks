@@ -1,38 +1,26 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void BalancedBrackets() {
+    public static void DayofWeek() {
         Scanner sc = new Scanner(System.in);
 
-        int lines = Integer.parseInt(sc.nextLine());
+        String [] days = {"Monday", "Tuesday", "Wednesday",
+                "Thursday", "Friday", "Saturday", "Sunday"};
 
-        String input;
-        boolean isUnbalanced=false;
-        int openBrackets=0;
-        int closeBrackets=0;
-        for(int i=1;i<=lines;i++){
-            input= sc.nextLine();
+        int day=Integer.parseInt(sc.nextLine());
 
-            if(input.equals("(")){
-                 openBrackets++;
-            }
-            else if (input.equals(")")) {
-                closeBrackets++;
-                if(closeBrackets>openBrackets)
-                 isUnbalanced=true;
-            }
-        }
-
-        if(!isUnbalanced && openBrackets==closeBrackets)
-            System.out.println("BALANCED");
+        if(day>=1 && day<=7)
+            System.out.println(days[day-1]);
         else
-            System.out.println("UNBALANCED");
+            System.out.println("Invalid day!");
+
+
 
 
     }
 
 
     public static void main(String[] args) {
-        BalancedBrackets();
+        DayofWeek();
     }
 }
