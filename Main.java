@@ -1,26 +1,27 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void DayofWeek() {
+    public static void PrintNumbersInReverseOrder() {
         Scanner sc = new Scanner(System.in);
 
-        String [] days = {"Monday", "Tuesday", "Wednesday",
-                "Thursday", "Friday", "Saturday", "Sunday"};
+        int numbers=Integer.parseInt(sc.nextLine());
 
-        int day=Integer.parseInt(sc.nextLine());
+        int [] numberArr=new int[numbers];
 
-        if(day>=1 && day<=7)
-            System.out.println(days[day-1]);
-        else
-            System.out.println("Invalid day!");
+        for(int i=0;i<numbers;i++){
+            int indexNumber=Integer.parseInt(sc.nextLine());
+            numberArr[i]=indexNumber;
+        }
 
-
+        for(int i=numberArr.length-1;i>=0;i--){
+            System.out.print(numberArr[i] + " ");
+        }
 
 
     }
 
 
     public static void main(String[] args) {
-        DayofWeek();
+        PrintNumbersInReverseOrder();
     }
 }
