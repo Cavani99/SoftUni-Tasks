@@ -1,27 +1,28 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void PrintNumbersInReverseOrder() {
+    public static void SumEvenNumbers() {
         Scanner sc = new Scanner(System.in);
 
-        int numbers=Integer.parseInt(sc.nextLine());
+        int [] numbers= Arrays
+                .stream(sc.nextLine().split(" "))
+                .mapToInt(e -> Integer.parseInt(e))
+                .toArray();
 
-        int [] numberArr=new int[numbers];
-
-        for(int i=0;i<numbers;i++){
-            int indexNumber=Integer.parseInt(sc.nextLine());
-            numberArr[i]=indexNumber;
+        int sum=0;
+        for(int i=0;i<numbers.length;i++){
+            if(numbers[i] % 2 ==0)
+                sum+=numbers[i];
         }
+        System.out.println(sum);
 
-        for(int i=numberArr.length-1;i>=0;i--){
-            System.out.print(numberArr[i] + " ");
-        }
 
 
     }
 
 
     public static void main(String[] args) {
-        PrintNumbersInReverseOrder();
+        SumEvenNumbers();
     }
 }
