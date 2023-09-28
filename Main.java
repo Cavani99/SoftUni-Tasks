@@ -2,7 +2,7 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void EqualSums() {
+    public static void MaxSequenceOfEqualElements() {
         Scanner sc = new Scanner(System.in);
 
         int [] numbers= Arrays
@@ -10,32 +10,43 @@ public class Main {
                 .mapToInt(Integer::parseInt)
                 .toArray();
 
-        int index;
-        boolean indexFound=false;
-        for(int i=0;i<numbers.length;i++) {
-            int sumLeft=0;
-            int sumRight=0;
-            for(int j=i-1;j>=0;j--){
-                sumLeft+=numbers[j];
+        int startIndex=0;
+        int indexValue=0;
+        int longestCount=0;
+        int longestIndex=0;
+        int count=0;
+        for(int i=0;i< numbers.length;i++){
+            if(i==0){
+                indexValue=numbers[i];
+                count++;
             }
-            for(int k=i+1;k< numbers.length;k++){
-               sumRight+=numbers[k];
+            else if(numbers[i]==indexValue){
+                count++;
+            }else {
+                if(count>longestCount){
+                    longestCount=count;
+                    longestIndex=startIndex;
+                }
+                startIndex=i;
+                indexValue=numbers[i];
+                count=1;
             }
 
-            if(sumLeft==sumRight) {
-                index=i;
-                System.out.println(index);
-                indexFound=true;
-                break;
-            }
         }
 
-        if(!indexFound)
-            System.out.println("no");
+        if(count>longestCount){
+            longestCount=count;
+            longestIndex=startIndex;
+        }
+
+        for(int j=longestIndex;j<longestCount+longestIndex;j++){
+            System.out.print(numbers[j]+" ");
+        }
+
 
     }
 
     public static void main(String[] args) {
-        EqualSums();
+        MaxSequenceOfEqualElements();
     }
 }
