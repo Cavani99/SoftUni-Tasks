@@ -2,43 +2,38 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void ZigZagArrays() {
+    public static void ArrayRotation() {
         Scanner sc = new Scanner(System.in);
 
-        int indexes=Integer.parseInt(sc.nextLine());
+        int [] numbers= Arrays
+                .stream(sc.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
 
-        int []arr1=new int[indexes];
-        int []arr2=new int[indexes];
+        int  rotations=Integer.parseInt(sc.nextLine());
 
-        for(int i=0;i<indexes;i++){
 
-            int [] numbers= Arrays
-                    .stream(sc.nextLine().split(" "))
-                    .mapToInt(Integer::parseInt)
-                    .toArray();
+        for(int i=1;i<=rotations;i++){
+            int [] rotationArr=new int[numbers.length];
 
-            if(i % 2==0){
-                arr1[i]=numbers[0];
-                arr2[i]=numbers[1];
-            }else{
-                arr1[i]=numbers[1];
-                arr2[i]=numbers[0];
+            for(int k=0;k<rotationArr.length;k++){
+
+                if(k==rotationArr.length-1){
+                    rotationArr[k]=numbers[0];
+                }else
+                    rotationArr[k]=numbers[k+1];
             }
-
+            numbers=rotationArr;
         }
 
-        for (int index:arr1){
-            System.out.print(index+" ");
-        }
-        System.out.println();
-        for (int index:arr2){
-            System.out.print(index+" ");
+        for (int j: numbers) {
+            System.out.print(j+ " ");
         }
 
     }
 
 
     public static void main(String[] args) {
-        ZigZagArrays();
+        ArrayRotation();
     }
 }
