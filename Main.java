@@ -1,23 +1,24 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
     public static void CondenseArrayToNumber() {
         Scanner sc = new Scanner(System.in);
 
-        int [] numbers= Arrays
-                .stream(sc.nextLine().split(" "))
-                .mapToInt(e -> Integer.parseInt(e))
-                .toArray();
+        int wagons=Integer.parseInt(sc.nextLine());
+        int [] arr=new int[wagons];
 
-        while(numbers.length>1){
-            int []condensed=new int[numbers.length-1];
-            for (int i=0;i<condensed.length;i++){
-                condensed[i]=numbers[i]+numbers[i+1];
-            }
-            numbers=condensed;
+        int sum=0;
+        for(int i=0;i<arr.length;i++){
+            int peopleInWagon=Integer.parseInt(sc.nextLine());
+            arr[i]=peopleInWagon;
+            sum+=peopleInWagon;
         }
-        System.out.println(numbers[0]);
+        for (int index : arr) {
+            System.out.print(index + " ");
+        }
+
+        System.out.println("\n"+sum);
+         
     }
 
 
