@@ -1,28 +1,28 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void CondenseArrayToNumber() {
+    public static void CommonElements() {
         Scanner sc = new Scanner(System.in);
 
-        int wagons=Integer.parseInt(sc.nextLine());
-        int [] arr=new int[wagons];
+        String [] arr1 =sc.nextLine().split(" ");
+        String [] arr2 =sc.nextLine().split(" ");
 
-        int sum=0;
-        for(int i=0;i<arr.length;i++){
-            int peopleInWagon=Integer.parseInt(sc.nextLine());
-            arr[i]=peopleInWagon;
-            sum+=peopleInWagon;
-        }
-        for (int index : arr) {
-            System.out.print(index + " ");
+
+        for(int i=0;i<arr2.length;i++){
+            for(int k=0;k<arr1.length;k++){
+                if(arr2[i].equals(arr1[k])){
+                    System.out.print(arr2[i]+" ");
+                }
+            }
         }
 
-        System.out.println("\n"+sum);
+
+
          
     }
 
 
     public static void main(String[] args) {
-        CondenseArrayToNumber();
+        CommonElements();
     }
 }
