@@ -2,50 +2,54 @@ import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void ArrayModifier() {
+    public static void TheLift() {
         Scanner sc = new Scanner(System.in);
 
+        int people=Integer.parseInt(sc.nextLine());
         int [] numbers= Arrays
                 .stream(sc.nextLine().split(" "))
                 .mapToInt(Integer::parseInt)
                 .toArray();
 
-        String [] input =sc.nextLine().split(" ");
-        while(!input[0].equals("end")){
-            if(input[0].equals("swap")){
-                int index1= Integer.parseInt(input[1]);
-                int index2= Integer.parseInt(input[2]);
-                int oldValue= numbers[index1];
-                numbers[index1]=numbers[index2];
-                numbers[index2]=oldValue;
+        int index=0;
+         while(true){
 
-            }
-            else if(input[0].equals("multiply")){
-                int index1= Integer.parseInt(input[1]);
-                int index2= Integer.parseInt(input[2]);
-                int mulipliedValue=numbers[index1]*numbers[index2];
-                numbers[index1]=mulipliedValue;
-            }else if(input[0].equals("decrease")){
-                for(int i=0;i<numbers.length;i++){
-                    numbers[i]-=1;
-                }
-            }
+             while(numbers[index]==4 && index<numbers.length-1){
+                 index++;
+             }
 
+             if(numbers[numbers.length-1]==4 && index==numbers.length-1 && people>0){
+                 System.out.printf("There isn't enough space! %d people " +
+                         "in a queue!\n",people);
+                 for (int j:numbers) {
+                     System.out.print(j + " ");
+                 }
+                 break;
+             }
 
-            input =sc.nextLine().split(" ");
-        }
+             else if(people>0 && numbers[index]<4){
+                    numbers[index]++;
+                    people--;
+             }else if(people==0 && index==numbers.length-1 && numbers[numbers.length-1]==4){
+                 for (int j:numbers) {
+                     System.out.print(j + " ");
+                 }
+                 break;
+             }else {
+                 System.out.println("The lift has empty spots!");
+                 for (int j:numbers) {
+                     System.out.print(j + " ");
+                 }
+                 break;
+             }
 
-        String []arr= new String[]{Arrays.toString(numbers)
-                .replace("[", "")
-                .replace("]", "")};
-
-        System.out.println(String.join(", ", arr));
+         }
 
 
 
     }
 
     public static void main(String[] args) {
-        ArrayModifier();
+        TheLift();
     }
 }
