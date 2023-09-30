@@ -1,55 +1,51 @@
-import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void TheLift() {
+    public static void EncryptSortAndPrintArray() {
         Scanner sc = new Scanner(System.in);
 
-        int people=Integer.parseInt(sc.nextLine());
-        int [] numbers= Arrays
-                .stream(sc.nextLine().split(" "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
+        int numberOfString=Integer.parseInt(sc.nextLine());
+        int [] arr=new int[numberOfString];
 
         int index=0;
-         while(true){
+        for(int i=0;i<numberOfString;i++){
+            String input=sc.nextLine();
+            char ch;
+            int sum=0;
+            for(int j=0;j<input.length();j++){
+                ch=input.charAt(j);
+                switch (ch) {
+                    case 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' -> sum += (int) ch * input.length();
+                    default -> sum += (int) ch / input.length();
+                }
+            }
 
-             while(numbers[index]==4 && index<numbers.length-1){
-                 index++;
-             }
+            arr[index]=sum;
+            index++;
 
-             if(numbers[numbers.length-1]==4 && index==numbers.length-1 && people>0){
-                 System.out.printf("There isn't enough space! %d people " +
-                         "in a queue!\n",people);
-                 for (int j:numbers) {
-                     System.out.print(j + " ");
-                 }
-                 break;
-             }
+        }
 
-             else if(people>0 && numbers[index]<4){
-                    numbers[index]++;
-                    people--;
-             }else if(people==0 && index==numbers.length-1 && numbers[numbers.length-1]==4){
-                 for (int j:numbers) {
-                     System.out.print(j + " ");
-                 }
-                 break;
-             }else {
-                 System.out.println("The lift has empty spots!");
-                 for (int j:numbers) {
-                     System.out.print(j + " ");
-                 }
-                 break;
-             }
+        for(int sort=0;sort<arr.length;sort++){
 
-         }
+            for(int compare=sort+1;compare<arr.length;compare++){
 
+                if (arr[sort] > arr[compare]) {
+                    int oldValue=arr[compare];
+                    arr[compare]=arr[sort];
+                    arr[sort]=oldValue;
+
+                }
+            }
+        }
+
+        for(int strings:arr){
+            System.out.println(strings);
+        }
 
 
     }
 
     public static void main(String[] args) {
-        TheLift();
+        EncryptSortAndPrintArray();
     }
 }
