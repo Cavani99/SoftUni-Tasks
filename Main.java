@@ -1,51 +1,32 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void EncryptSortAndPrintArray() {
+    public static void PascalTriangle() {
         Scanner sc = new Scanner(System.in);
 
-        int numberOfString=Integer.parseInt(sc.nextLine());
-        int [] arr=new int[numberOfString];
+        int rows=Integer.parseInt(sc.nextLine());
 
-        int index=0;
-        for(int i=0;i<numberOfString;i++){
-            String input=sc.nextLine();
-            char ch;
-            int sum=0;
-            for(int j=0;j<input.length();j++){
-                ch=input.charAt(j);
-                switch (ch) {
-                    case 'a', 'e', 'i', 'o', 'u', 'A', 'E', 'I', 'O', 'U' -> sum += (int) ch * input.length();
-                    default -> sum += (int) ch / input.length();
-                }
+        int []arrValue=new int[rows];
+        for(int i=1;i<=rows;i++){
+            int []arr=new int[i];
+            for(int j=0;j<arr.length;j++){
+                if(j==0)
+                    arr[j]=1;
+                else
+                    arr[j]=arrValue[j]+arrValue[j-1];
             }
-
-            arr[index]=sum;
-            index++;
-
-        }
-
-        for(int sort=0;sort<arr.length;sort++){
-
-            for(int compare=sort+1;compare<arr.length;compare++){
-
-                if (arr[sort] > arr[compare]) {
-                    int oldValue=arr[compare];
-                    arr[compare]=arr[sort];
-                    arr[sort]=oldValue;
-
-                }
+            for (int index:arr) {
+                System.out.print(index+" ");
             }
-        }
+            System.out.println();
 
-        for(int strings:arr){
-            System.out.println(strings);
+            System.arraycopy(arr, 0, arrValue, 0, arr.length);
         }
 
 
     }
 
     public static void main(String[] args) {
-        EncryptSortAndPrintArray();
+        PascalTriangle();
     }
 }
