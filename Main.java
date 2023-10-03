@@ -1,66 +1,69 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Main {
-    public static void KaminoFactory() {
+    public static void LadyBugs() {
         Scanner sc = new Scanner(System.in);
 
-        int sequences=Integer.parseInt(sc.nextLine());
-        String []sample=sc.nextLine().split("!+");
+        int fields=Integer.parseInt(sc.nextLine());
+        int [] initialBugs= Arrays
+                .stream(sc.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
 
+        String input;
+        int []arr=new int[fields];
 
-        int startIndex=-1;
-        int bestSum=0;
-        int sampleIndex=0;
-        int bestIndex=0;
-        int bestTotal=0;
-        int bestStart=sample.length;
-        String [] best = new String[0];
-        while(!sample[0].equals("Clone them")){
-            int sum=0;
-            int totalSum=0;
-            int sequenceSum=0;
-            sampleIndex++;
+        for (int index : initialBugs) {
+            if(index<arr.length && index>=0)
+                arr[index] = 1;
+        }
 
-            for(int i=0;i<sample.length;i++){
-                String ch=sample[i];
-                if(ch.equals("1")){
-                    if(sum==0 && sequenceSum==0)
-                        startIndex=i;
-                    sum++;
-                    totalSum++;
-                    if(sum>sequenceSum && sequenceSum!=0)
-                        startIndex=i-sum+1;
-                }
-                else{
-                    if(sum>0){
-                        if(sum>sequenceSum)
-                            sequenceSum=sum;
+        while(!(input=sc.nextLine()).equals("end")){
+            String [] inputArr=input.split(" ");
+            int index= Integer.parseInt(inputArr[0]);
+            int flyLength=Integer.parseInt(inputArr[2]);
+
+            if(index<0 || index>=arr.length || arr[index]==0){
+                continue;
+            }
+            arr[index]=0;
+            if(inputArr[1].equals("right")){
+                int direction=index+flyLength;
+
+                while(direction<arr.length && direction>=0){
+                    if(arr[direction]==0){
+                        arr[direction]=1;
+                        break;
+                    }else{
+                        direction+=flyLength;
                     }
 
-                    sum=0;
                 }
 
             }
+            else if(inputArr[1].equals("left")){
+                int direction=index-flyLength;
 
-            if(sequenceSum>bestSum ||
-                    sequenceSum==bestSum && startIndex<bestStart ||
-                    totalSum>bestTotal
-            ) {
-                bestTotal=totalSum;
-                bestSum=sequenceSum;
-                bestStart=startIndex;
-                bestIndex=sampleIndex;
-                best=sample;
+                while(direction<arr.length && direction>=0){
+                    if(arr[direction]==0){
+                        arr[direction]=1;
+                        break;
+                    }else{
+                        direction-=flyLength;
+                    }
+
+                }
+
+
             }
 
-            sample=sc.nextLine().split("!+");
         }
 
-
-        System.out.printf("Best DNA sample %d with sum: %d.\n",bestIndex,bestTotal);
-        for (String s : best) {
-            System.out.print(s + " ");
+        for (int index:arr) {
+            System.out.print(index+" ");
         }
+
 
 
     }
@@ -68,6 +71,6 @@ public class Main {
 
 
     public static void main(String[] args) {
-        KaminoFactory();
+        LadyBugs();
     }
 }
