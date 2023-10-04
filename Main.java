@@ -1,17 +1,23 @@
 import java.util.Scanner;
 
 public class Main {
-    public static void Grades(double grade) {
-       if(grade>=2.00 &&grade<3.00)
-           System.out.println("Fail");
-       else if(grade>=3.00 && grade<=3.49)
-           System.out.println("Poor");
-       else if(grade>=3.50 && grade<=4.49)
-           System.out.println("Good");
-       else if(grade>=4.50 && grade<=5.49)
-           System.out.println("Very good");
-       else if(grade>=5.50 && grade<=6.00)
-           System.out.println("Excellent");
+    public static void printingTriangle(int size) {
+
+    //print the upper and middle part of the triangle
+       for(int i=1;i<=size;i++){
+          for(int k=1;k<=i;k++){
+              System.out.print(k+" ");
+          }
+          System.out.println();
+       }
+
+    //print the bottom part of the triangle
+        for(int i=size-1;i>=1;i--){
+            for(int k=1;k<=i;k++){
+                System.out.print(k+" ");
+            }
+            System.out.println();
+        }
 
     }
 
@@ -19,8 +25,8 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        double grade=Double.parseDouble(sc.nextLine());
+        int size=Integer.parseInt(sc.nextLine());
 
-        Grades(grade);
+        printingTriangle(size);
     }
 }
