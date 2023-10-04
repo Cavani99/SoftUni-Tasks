@@ -1,24 +1,25 @@
+import java.text.DecimalFormat;
 import java.util.Scanner;
 
 public class Main {
-    public static String repeatString(String string,int amount) {
-        String newString="";
+    public static double mathPower(double number,int power) {
+        double sum = 1;
 
-        for(int i=1;i<=amount;i++){
-            newString+=string;
+        for(int i=0;i<power;i++){
+         sum*=number;
         }
 
-        return newString;
+        return sum;
     }
 
 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String input=sc.nextLine();
-        int repetitions=Integer.parseInt(sc.nextLine());
+        double number=Double.parseDouble(sc.nextLine());
+        int power=Integer.parseInt(sc.nextLine());
 
-        System.out.println(repeatString(input,repetitions));
+        System.out.println(new DecimalFormat("0.####").format(mathPower(number,power)));
 
     }
 }
