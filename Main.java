@@ -1,22 +1,24 @@
 import java.util.Scanner;
 
 public class Main {
-    public static double rectangleArea(double width,double length) {
+    public static String repeatString(String string,int amount) {
+        String newString="";
 
-        return width*length;
+        for(int i=1;i<=amount;i++){
+            newString+=string;
+        }
 
+        return newString;
     }
 
 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        double width=Double.parseDouble(sc.nextLine());
-        double length=Double.parseDouble(sc.nextLine());
+        String input=sc.nextLine();
+        int repetitions=Integer.parseInt(sc.nextLine());
 
-        System.out.printf("%.0f",rectangleArea(width,length));
-
-
+        System.out.println(repeatString(input,repetitions));
 
     }
 }
