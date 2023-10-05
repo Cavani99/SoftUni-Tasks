@@ -3,39 +3,47 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static void readNumberLoop() {
-        Scanner sc = new Scanner(System.in);
-        String input= sc.nextLine();
-        int num1;
+    public static void readNumberLoop(int num) {
 
-        while(!input.equals("END")){
-            num1=Integer.parseInt(input);
-
-            if(isPalindrome(num1))
-                System.out.println("true");
-            else
-                System.out.println("false");
-
-            input= sc.nextLine();
+        for (int i=1;i<=num;i++){
+            int digitSum=sumOfDigits(i);
+            if(digitSum % 8==0 && oddDigitPresent(i))
+                System.out.println(i);
         }
-
 
     }
 
-    public static boolean isPalindrome(int num1) {
-         String value=String.valueOf(num1);
-         String rearValue="";
-         for(int i=value.length()-1;i>=0;i--){
-             rearValue+=value.charAt(i);
-         }
+    public static int sumOfDigits(int num) {
+        String value=String.valueOf(num);
+        int sum=0;
 
-        return value.equals(rearValue);
+        for(int i=0;i<value.length();i++){
+             int digit=Integer.parseInt(String.valueOf((value.charAt(i))));
+             sum+=digit;
+        }
+
+        return sum;
+    }
+    public static boolean oddDigitPresent(int num) {
+        String value=String.valueOf(num);
+
+        for(int i=0;i<value.length();i++){
+            int digit=Integer.parseInt(String.valueOf((value.charAt(i))));
+
+            if(digit % 2!=0)
+                return true;
+        }
+
+        return false;
     }
 
 
 
     public static void main(String[] args) {
-        readNumberLoop();
+        Scanner sc = new Scanner(System.in);
+        int number= Integer.parseInt(sc.nextLine());
+
+        readNumberLoop(number);
 
 
     }
