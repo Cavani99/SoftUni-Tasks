@@ -2,41 +2,29 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static int getVowelsCount(String input){
-        int sum=0;
+    public static String getCharactersRange(char ch1,char ch2){
+         String charactersInBetween="";
 
-       for(int i=0;i<input.length();i++){
-           char ch=input.charAt(i);
+         if(ch2>ch1) {
+             for (int i = (int) ch1 + 1; i < (int) ch2; i++) {
+                 charactersInBetween += (char) i + " ";
+             }
+         }else{
+             for (int i = (int) ch2 + 1; i < (int) ch1; i++) {
+                 charactersInBetween += (char) i + " ";
+             }
+         }
 
-           switch (ch){
-               case 'a':
-               case 'e':
-               case 'i':
-               case 'o':
-               case 'u':
-               case 'y':
-               case 'A':
-               case 'E':
-               case 'I':
-               case 'O':
-               case 'U':
-               case 'Y':
-                   sum++;
-                   break;
-           }
-
-       }
-
-
-        return sum;
+        return charactersInBetween;
     }
 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String input=sc.nextLine();
+        char input1=sc.nextLine().charAt(0);
+        char input2=sc.nextLine().charAt(0);
 
-        System.out.println(getVowelsCount(input));
+        System.out.println(getCharactersRange(input1,input2));
 
 
     }
