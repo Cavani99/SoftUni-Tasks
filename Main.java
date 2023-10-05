@@ -3,28 +3,40 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static double divideNumbers(int num1,int num2) {
+    public static void readNumberLoop() {
+        Scanner sc = new Scanner(System.in);
+        String input= sc.nextLine();
+        int num1;
 
-    return getFactorial(num1)/getFactorial(num2);
-    }
+        while(!input.equals("END")){
+            num1=Integer.parseInt(input);
 
-    public static double getFactorial(int num){
-        double result=1;
+            if(isPalindrome(num1))
+                System.out.println("true");
+            else
+                System.out.println("false");
 
-        for(int i=1;i<=num;i++){
-            result*=i;
+            input= sc.nextLine();
         }
 
-        return result;
+
     }
+
+    public static boolean isPalindrome(int num1) {
+         String value=String.valueOf(num1);
+         String rearValue="";
+         for(int i=value.length()-1;i>=0;i--){
+             rearValue+=value.charAt(i);
+         }
+
+        return value.equals(rearValue);
+    }
+
 
 
     public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int number1=Integer.parseInt(sc.nextLine());
-        int number2=Integer.parseInt(sc.nextLine());
+        readNumberLoop();
 
-        System.out.printf("%.2f",divideNumbers(number1,number2));
 
     }
 }
