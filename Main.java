@@ -3,25 +3,28 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static void getMatrix(int size) {
-        int [][]arr=new int[size][size];
+    public static double divideNumbers(int num1,int num2) {
 
-        for(int i=0;i<arr.length;i++){
-            for(int j=0;j< arr[0].length;j++){
-                System.out.print(size+" ");
-            }
-            System.out.println();
+    return getFactorial(num1)/getFactorial(num2);
+    }
+
+    public static double getFactorial(int num){
+        double result=1;
+
+        for(int i=1;i<=num;i++){
+            result*=i;
         }
 
-
+        return result;
     }
 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int number=Integer.parseInt(sc.nextLine());
+        int number1=Integer.parseInt(sc.nextLine());
+        int number2=Integer.parseInt(sc.nextLine());
 
-        getMatrix(number);
+        System.out.printf("%.2f",divideNumbers(number1,number2));
 
     }
 }
