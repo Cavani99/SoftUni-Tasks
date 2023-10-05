@@ -2,23 +2,41 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static int getSmallest(int num1,int num2,int num3){
+    public static int getVowelsCount(String input){
+        int sum=0;
 
-        int min=Math.min(num1,num2);
+       for(int i=0;i<input.length();i++){
+           char ch=input.charAt(i);
+
+           switch (ch){
+               case 'a':
+               case 'e':
+               case 'i':
+               case 'o':
+               case 'u':
+               case 'y':
+               case 'A':
+               case 'E':
+               case 'I':
+               case 'O':
+               case 'U':
+               case 'Y':
+                   sum++;
+                   break;
+           }
+
+       }
 
 
-        return Math.min(min,num3);
+        return sum;
     }
 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int number1=Integer.parseInt(sc.nextLine());
-        int number2=Integer.parseInt(sc.nextLine());
-        int number3=Integer.parseInt(sc.nextLine());
+        String input=sc.nextLine();
 
-        System.out.println(getSmallest(number1,number2,number3));
-
+        System.out.println(getVowelsCount(input));
 
 
     }
