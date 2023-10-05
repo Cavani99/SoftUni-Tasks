@@ -3,31 +3,25 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static String getMiddleCharacter(String input) {
-        String middleChar="";
+    public static void getMatrix(int size) {
+        int [][]arr=new int[size][size];
 
-        if(input.length() % 2==0){
-              int middleIndex=input.length()/2;
-              middleChar+=String.valueOf(input.charAt(middleIndex-1));
-              middleChar+=String.valueOf(input.charAt(middleIndex));
-
-        }else {
-            int middleIndex= (int) Math.ceil(input.length()/2);
-            middleChar= String.valueOf(input.charAt(middleIndex));
+        for(int i=0;i<arr.length;i++){
+            for(int j=0;j< arr[0].length;j++){
+                System.out.print(size+" ");
+            }
+            System.out.println();
         }
 
-
-        return middleChar;
 
     }
 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String input=sc.nextLine();
+        int number=Integer.parseInt(sc.nextLine());
 
-        System.out.println(getMiddleCharacter(input));
-
+        getMatrix(number);
 
     }
 }
