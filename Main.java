@@ -2,25 +2,32 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static int sumTwoNumbers(int num1,int num2) {
 
-        return num1+num2;
-    }
-    public static int subtractTwoNumbers(int num1,int num2,int num3) {
-        int sum=sumTwoNumbers(num1,num2);
+    public static String getMiddleCharacter(String input) {
+        String middleChar="";
 
-        return sum-num3;
+        if(input.length() % 2==0){
+              int middleIndex=input.length()/2;
+              middleChar+=String.valueOf(input.charAt(middleIndex-1));
+              middleChar+=String.valueOf(input.charAt(middleIndex));
+
+        }else {
+            int middleIndex= (int) Math.ceil(input.length()/2);
+            middleChar= String.valueOf(input.charAt(middleIndex));
+        }
+
+
+        return middleChar;
 
     }
 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int num1=Integer.parseInt(sc.nextLine());
-        int num2=Integer.parseInt(sc.nextLine());
-        int num3=Integer.parseInt(sc.nextLine());
+        String input=sc.nextLine();
 
-        System.out.println(subtractTwoNumbers(num1,num2,num3));
+        System.out.println(getMiddleCharacter(input));
+
 
     }
 }
