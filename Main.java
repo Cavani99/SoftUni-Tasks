@@ -3,20 +3,10 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static void dataTypeOperation(int num) {
 
-        System.out.println( num*2);
-    }
+    public static int cartesianSystemDistance(int x,int y) {
 
-    public static void dataTypeOperation(double num) {
-
-        System.out.printf("%.2f",num*1.5);
-
-    }
-
-    public static void dataTypeOperation(String input) {
-
-        System.out.println("$"+input+"$");
+       return Math.abs(x+y);
     }
 
 
@@ -24,22 +14,16 @@ public class Main {
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        String dataType=sc.nextLine();
+        int x1=Integer.parseInt(sc.nextLine());
+        int y1=Integer.parseInt(sc.nextLine());
+        int x2=Integer.parseInt(sc.nextLine());
+        int y2=Integer.parseInt(sc.nextLine());
 
-        switch (dataType){
-            case "int":
-                int num=Integer.parseInt(sc.nextLine());
-                dataTypeOperation(num);
-                break;
-            case "real":
-                double floatNumber=Double.parseDouble(sc.nextLine());
-                dataTypeOperation(floatNumber);
-                break;
-            case "string":
-                String input= sc.nextLine();
-                dataTypeOperation(input);
-                break;
-        }
+        if(cartesianSystemDistance(x1,y1)<=cartesianSystemDistance(x2,y2)){
+            System.out.printf("(%d, %d)",x1,y1);
+        }else
+            System.out.printf("(%d, %d)",x2,y2);
+
 
 
 
