@@ -3,47 +3,44 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static void readNumberLoop(int num) {
+    public static void dataTypeOperation(int num) {
 
-        for (int i=1;i<=num;i++){
-            int digitSum=sumOfDigits(i);
-            if(digitSum % 8==0 && oddDigitPresent(i))
-                System.out.println(i);
-        }
+        System.out.println( num*2);
+    }
+
+    public static void dataTypeOperation(double num) {
+
+        System.out.printf("%.2f",num*1.5);
 
     }
 
-    public static int sumOfDigits(int num) {
-        String value=String.valueOf(num);
-        int sum=0;
+    public static void dataTypeOperation(String input) {
 
-        for(int i=0;i<value.length();i++){
-             int digit=Integer.parseInt(String.valueOf((value.charAt(i))));
-             sum+=digit;
-        }
-
-        return sum;
+        System.out.println("$"+input+"$");
     }
-    public static boolean oddDigitPresent(int num) {
-        String value=String.valueOf(num);
 
-        for(int i=0;i<value.length();i++){
-            int digit=Integer.parseInt(String.valueOf((value.charAt(i))));
-
-            if(digit % 2!=0)
-                return true;
-        }
-
-        return false;
-    }
 
 
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int number= Integer.parseInt(sc.nextLine());
+        String dataType=sc.nextLine();
 
-        readNumberLoop(number);
+        switch (dataType){
+            case "int":
+                int num=Integer.parseInt(sc.nextLine());
+                dataTypeOperation(num);
+                break;
+            case "real":
+                double floatNumber=Double.parseDouble(sc.nextLine());
+                dataTypeOperation(floatNumber);
+                break;
+            case "string":
+                String input= sc.nextLine();
+                dataTypeOperation(input);
+                break;
+        }
+
 
 
     }
