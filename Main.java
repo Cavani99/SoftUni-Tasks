@@ -2,41 +2,47 @@ import java.util.Scanner;
 
 public class Main {
 
-    public static long getTribonacci(long n1,long n2,long n3) {
+    public static boolean zeroFound(int n1,int n2,int n3) {
 
-        return n1+n2+n3;
+        return n1 == 0 || n2 == 0 || n3 == 0;
+
 
     }
 
-    public static void printTribonacciSequence(long n){
-        long number1=1;
-        long number2=1;
-        long number3=2;
+    public static boolean isNegative(int n1,int n2,int n3) {
+        int negativeCount=0;
 
+        if(n1<0)
+            negativeCount++;
+        if(n2<0)
+            negativeCount++;
+        if(n3<0)
+            negativeCount++;
 
-        for(int i=1;i<=n;i++){
-            if(i>=4) {
-                long number4 = getTribonacci(number1, number2, number3);
-                System.out.print(number4 + " ");
-                number1 = number2;
-                number2 = number3;
-                number3 = number4;
-            }else if(i==1)
-                System.out.print(number1+" ");
-            else if(i==2)
-                System.out.print(number2+" ");
-            else if(i==3){
-                System.out.print(number3+" ");
-            }
-        }
+        return negativeCount % 2 != 0;
+
+    }
+
+    public static void MultiplicationStatus(int n1,int n2,int n3){
+        if(zeroFound(n1,n2,n3))
+            System.out.println("zero");
+        else if(isNegative(n1,n2,n3))
+            System.out.println("negative");
+        else
+            System.out.println("positive");
+
 
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int number=Integer.parseInt(sc.nextLine());
+        int num1=Integer.parseInt(sc.nextLine());
+        int num2=Integer.parseInt(sc.nextLine());
+        int num3=Integer.parseInt(sc.nextLine());
 
-        printTribonacciSequence(number);
+
+        MultiplicationStatus(num1,num2,num3);
+
 
     }
 }
