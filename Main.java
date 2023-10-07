@@ -2,49 +2,41 @@ import java.util.Scanner;
 
 public class Main {
 
+    public static long getTribonacci(long n1,long n2,long n3) {
 
+        return n1+n2+n3;
 
-    public static int cartesianSystemDistance(int x,int y) {
-
-        return (int) Math.sqrt(Math.pow((-x),2)+Math.pow((-y),2));
     }
 
-    public static double distanceBetween2Points(int x1,int y1,int x2,int y2){
+    public static void printTribonacciSequence(long n){
+        long number1=1;
+        long number2=1;
+        long number3=2;
 
-        return Math.sqrt(Math.pow((x2-x1),2) + Math.pow((y2-y1),2));
+
+        for(int i=1;i<=n;i++){
+            if(i>=4) {
+                long number4 = getTribonacci(number1, number2, number3);
+                System.out.print(number4 + " ");
+                number1 = number2;
+                number2 = number3;
+                number3 = number4;
+            }else if(i==1)
+                System.out.print(number1+" ");
+            else if(i==2)
+                System.out.print(number2+" ");
+            else if(i==3){
+                System.out.print(number3+" ");
+            }
+        }
+
     }
-
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
-        int x1=Integer.parseInt(sc.nextLine());
-        int y1=Integer.parseInt(sc.nextLine());
-        int x2=Integer.parseInt(sc.nextLine());
-        int y2=Integer.parseInt(sc.nextLine());
+        int number=Integer.parseInt(sc.nextLine());
 
-        int x3=Integer.parseInt(sc.nextLine());
-        int y3=Integer.parseInt(sc.nextLine());
-        int x4=Integer.parseInt(sc.nextLine());
-        int y4=Integer.parseInt(sc.nextLine());
-
-        double plane1= distanceBetween2Points(x1,y1,x2,y2);
-        double plane2= distanceBetween2Points(x3,y3,x4,y4);
-
-
-        if(plane1>=plane2){
-            if(cartesianSystemDistance(x1,y1)<=cartesianSystemDistance(x2,y2)){
-                System.out.printf("(%d, %d)(%d, %d)",x1,y1,x2,y2);
-            }else
-                System.out.printf("(%d, %d)(%d, %d)",x2,y2,x1,y1);
-
-        }else{
-            if(cartesianSystemDistance(x3,y3)<=cartesianSystemDistance(x4,y4)){
-                System.out.printf("(%d, %d)(%d, %d)",x3,y3,x4,y4);
-            }else
-                System.out.printf("(%d, %d)(%d, %d)",x4,y4,x3,y3);
-
-        }
-
+        printTribonacciSequence(number);
 
     }
 }
