@@ -3,26 +3,31 @@ import java.util.Scanner;
 public class Main {
 
 
-    public static void BitAtPositionN(){
+    public static void setBitAtNTo0(){
         Scanner sc = new Scanner(System.in);
         int number=Integer.parseInt(sc.nextLine());
         int n=Integer.parseInt(sc.nextLine());
-        int bitAtPositionN = 0;
-
-        String num;
-        for(int i=0;i<n;i++){
-            bitAtPositionN=number >> 1;
-            number=bitAtPositionN;
-            num = Integer.toBinaryString(bitAtPositionN);
-            bitAtPositionN= Integer.parseInt(String.valueOf(num.charAt(num.length()-1)));
 
 
-            bitAtPositionN= bitAtPositionN & 1;
+        StringBuilder num= new StringBuilder(Integer.toBinaryString(number));
+
+        int count=0;
+        int index=0;
+        for(int i=num.length()-1;i>=0;i--){
+            if(count==n){
+                index=i;
+                break;
+            }
+            count++;
         }
 
+        num.setCharAt(index,'0');
+
+        String value= String.valueOf(num);
+        number=Integer.parseInt(value,2);
 
 
-        System.out.println(bitAtPositionN);
+        System.out.println(number);
 
     }
 
@@ -31,7 +36,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        BitAtPositionN();
+        setBitAtNTo0();
 
 
     }
