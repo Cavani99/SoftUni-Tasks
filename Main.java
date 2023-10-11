@@ -1,42 +1,45 @@
-import java.util.Arrays;
-import java.util.Scanner;
+import java.text.DecimalFormat;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
 
-    public static void ElementOccuringOddTimesUsingXOR(){
+    public static void SumEqualNumbersInList(){
         Scanner sc = new Scanner(System.in);
-        int [] arr= Arrays
-                .stream(sc.nextLine().split(" "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
 
-        int result=0;
-        for(int i=0;i<arr.length;i++){
-            result=result ^ arr[i];
-            for(int j=i+1;j< arr.length;j++){
-                if(arr[j]==arr[i])
-                    result=result ^ arr[j];
-            }
-            if(result!=0){
-                System.out.println(arr[i]);
-                break;
-            }
-            result=0;
+        List<Double> numbers=
+                Arrays.stream(sc.nextLine().split(" "))
+                        .map(Double::parseDouble).collect(Collectors.toList());
 
+        for(int i=0;i<numbers.size();i++){
+            if(i!= numbers.size()-1){
+                if(numbers.get(i).equals(numbers.get(i+1))){
+                    numbers.set(i,(numbers.get(i)+numbers.get(i+1)));
+                    numbers.remove(i+1);
+                    i=-1;
+                }
+            }
         }
 
-
-
-
+        String output= joinElementsByDelimiter(numbers, " ");
+        System.out.println(output);
     }
 
+    public static String joinElementsByDelimiter(List <Double> items,String delimiter){
+
+        String output="";
+        for(Double item: items)
+            output+=(new DecimalFormat("0.#").format(item)+delimiter);
+
+        return output;
+    }
 
 
 
     public static void main(String[] args) {
 
-        ElementOccuringOddTimesUsingXOR();
+        SumEqualNumbersInList();
 
 
     }
