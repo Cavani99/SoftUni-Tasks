@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -8,31 +7,31 @@ public class Main {
     public static void SumEqualNumbersInList(){
         Scanner sc = new Scanner(System.in);
 
-        List<Double> numbers=
+        List<Integer> numbers=
                 Arrays.stream(sc.nextLine().split(" "))
-                        .map(Double::parseDouble).collect(Collectors.toList());
+                        .map(Integer::parseInt).collect(Collectors.toList());
 
-        for(int i=0;i<numbers.size();i++){
-            if(i!= numbers.size()-1){
-                if(numbers.get(i).equals(numbers.get(i+1))){
-                    numbers.set(i,(numbers.get(i)+numbers.get(i+1)));
-                    numbers.remove(i+1);
-                    i=-1;
-                }
-            }
+        int loops = numbers.size() / 2 ;
+
+
+        for(int i=0;i<loops;i++){
+
+               numbers.set(i, numbers.get(i)+ numbers.get(numbers.size()-1));
+               numbers.remove(numbers.size()-1);
+
         }
 
-        String output= joinElementsByDelimiter(numbers, " ");
-        System.out.println(output);
+
+
+        printElements(numbers, " ");
     }
 
-    public static String joinElementsByDelimiter(List <Double> items,String delimiter){
+    public static void printElements(List <Integer> items,String delimiter){
 
-        String output="";
-        for(Double item: items)
-            output+=(new DecimalFormat("0.#").format(item)+delimiter);
+        for(Integer item: items)
+            System.out.print(item + delimiter);
 
-        return output;
+
     }
 
 
