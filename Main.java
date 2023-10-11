@@ -4,51 +4,63 @@ import java.util.stream.Collectors;
 public class Main {
 
 
-    public static void SumEqualNumbersInList(){
+    public static void ListOperations(){
         Scanner sc = new Scanner(System.in);
 
-        List<Integer> numbers1=
-                Arrays.stream(sc.nextLine().split(" "))
-                        .map(Integer::parseInt).collect(Collectors.toList());
-
-        List<Integer> numbers2=
+        List<Integer> numbers=
                 Arrays.stream(sc.nextLine().split(" "))
                         .map(Integer::parseInt).collect(Collectors.toList());
 
 
-        int loops = numbers1.size()+numbers2.size();
-        List <Integer> mergeList = new ArrayList<>(loops);
+        String [] command=sc.nextLine().split(" ");
+        while(!command[0].equals("end")){
+            switch (command[0]){
+                case "Add":
+                    int number= Integer.parseInt(command[1]);
+                    addToList(numbers,number);
+                    break;
+                case "Remove":
+                    number=Integer.parseInt(command[1]);
+                    removeFromList(numbers,number);
+                    break;
+                case "RemoveAt":
+                    int index=Integer.parseInt(command[1]);
+                    removeAtIndexList(numbers,index);
+                    break;
+                case "Insert":
+                    number=Integer.parseInt(command[1]);
+                    index=Integer.parseInt(command[2]);
+                    insertAtIndex(numbers,number,index);
+                    break;
+            }
 
-        while(mergeList.size()<loops)
-            mergeList.add(0);
 
-        boolean positive=false;
-        int index=0;
-        for(int i=0;i<mergeList.size();i++){
-
-            if(index<numbers1.size() && !positive){
-                mergeList.set(i, numbers1.get(index));
-                positive=true;
-            }
-            else if(index<numbers2.size() && positive) {
-                mergeList.set(i, numbers2.get(index));
-                positive=false;
-                index++;
-            }
-            else if(index>= numbers1.size()){
-                mergeList.set(i, numbers2.get(index));
-                index++;
-            }
-            else{
-                index++;
-                mergeList.set(i, numbers1.get(index));
-            }
+            command=sc.nextLine().split(" ");
         }
 
 
 
 
-        printElements(mergeList, " ");
+        printElements(numbers, " ");
+    }
+
+    public static void addToList(List<Integer> list,int value){
+
+        list.add(value);
+    }
+
+    public static void removeFromList(List<Integer> list,int value){
+
+       list.removeAll(Collections.singleton(value));
+    }
+
+    public static void removeAtIndexList(List<Integer> list,int index){
+
+        list.remove(index);
+    }
+    public static void insertAtIndex(List<Integer> list,int number,int index){
+
+        list.add(index,number);
     }
 
     public static void printElements(List <Integer> items,String delimiter){
@@ -63,7 +75,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        SumEqualNumbersInList();
+        ListOperations();
 
 
     }
