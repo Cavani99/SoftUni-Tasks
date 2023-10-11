@@ -1,35 +1,38 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
 
-    public static void ListOperations(){
+    public static void removeNegative(){
         Scanner sc = new Scanner(System.in);
 
-        int amount=Integer.parseInt(sc.nextLine());
-        List<String> products=new ArrayList<>();
+        List<Integer> numbers=
+                Arrays.stream(sc.nextLine().split(" "))
+                        .map(Integer::parseInt).collect(Collectors.toList());
 
-        for(int i=0;i<amount;i++){
-            String newProduct=sc.nextLine();
-            products.add(newProduct);
+
+        for(int i=0;i< numbers.size();i++){
+            if(numbers.get(i)<0){
+                numbers.remove(i);
+                i-=1;
+            }
         }
 
-        Collections.sort(products);
 
-
-        printElements(products);
-
+        printElementsReverse(numbers);
     }
 
 
 
-    public static void printElements(List <String> items){
-        int index=1;
-        for(String item: items){
-            System.out.printf("%d.%s\n",index,item);
-            index++;
+    public static void printElementsReverse(List <Integer> items){
+        if(items.isEmpty()){
+            System.out.println("empty");
+        }else {
+            for (int i=items.size()-1;i>=0;i--) {
+                System.out.print(items.get(i) + " ");
+            }
         }
-
 
     }
 
@@ -38,7 +41,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        ListOperations();
+        removeNegative();
 
 
     }
