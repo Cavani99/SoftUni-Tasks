@@ -15,22 +15,25 @@ public class Main {
         String [] command=sc.nextLine().split(" ");
         while(!command[0].equals("end")){
             switch (command[0]){
-                case "Add":
+                case "Contains":
                     int number= Integer.parseInt(command[1]);
-                    addToList(numbers,number);
+                    containsValue(numbers,number);
                     break;
-                case "Remove":
-                    number=Integer.parseInt(command[1]);
-                    removeFromList(numbers,number);
+                case "Print":
+                    String value=command[1];
+                    if(value.equals("even"))
+                        printEven(numbers);
+                    else
+                        printOdd(numbers);
                     break;
-                case "RemoveAt":
-                    int index=Integer.parseInt(command[1]);
-                    removeAtIndexList(numbers,index);
+                case "Get":
+                    if(command[1].equals("sum"))
+                        getSumOfList(numbers);
                     break;
-                case "Insert":
-                    number=Integer.parseInt(command[1]);
-                    index=Integer.parseInt(command[2]);
-                    insertAtIndex(numbers,number,index);
+                case "Filter":
+                    String condition=command[1];
+                    number=Integer.parseInt(command[2]);
+                    filterByCondition(numbers,condition,number);
                     break;
             }
 
@@ -41,35 +44,80 @@ public class Main {
 
 
 
-        printElements(numbers, " ");
     }
 
-    public static void addToList(List<Integer> list,int value){
+    public static void containsValue(List<Integer> list,int value){
 
-        list.add(value);
-    }
-
-    public static void removeFromList(List<Integer> list,int value){
-
-       list.removeAll(Collections.singleton(value));
-    }
-
-    public static void removeAtIndexList(List<Integer> list,int index){
-
-        list.remove(index);
-    }
-    public static void insertAtIndex(List<Integer> list,int number,int index){
-
-        list.add(index,number);
-    }
-
-    public static void printElements(List <Integer> items,String delimiter){
-
-        for(Integer item: items)
-            System.out.print(item + delimiter);
-
+       boolean valueExists= list.contains(value);
+       if(valueExists)
+           System.out.println("Yes");
+       else
+           System.out.println("No such number");
 
     }
+
+    public static void printEven(List<Integer> list){
+
+        for (Integer even : list) {
+            if (even % 2 == 0)
+                System.out.print(even + " ");
+        }
+        System.out.println();
+
+    }
+
+    public static void printOdd(List<Integer> list){
+
+        for (Integer odd : list) {
+            if (odd % 2 != 0)
+                System.out.print(odd + " ");
+        }
+        System.out.println();
+    }
+    public static void getSumOfList(List<Integer> list){
+        int sum=0;
+        for(int index:list)
+            sum+=index;
+
+        System.out.println(sum);
+    }
+
+    public static void filterByCondition(List<Integer> list,String condition,int number){
+        switch (condition){
+            case "<":
+                for (int index: list) {
+                    if(index<number)
+                        System.out.print(index+" ");
+                }
+                System.out.println();
+                break;
+            case ">":
+                for (int index: list) {
+                    if(index>number)
+                        System.out.print(index+" ");
+                }
+                System.out.println();
+                break;
+            case ">=":
+                for (int index: list) {
+                    if(index>=number)
+                        System.out.print(index+" ");
+                }
+                System.out.println();
+                break;
+            case "<=":
+                for (int index: list) {
+                    if(index<=number)
+                        System.out.print(index+" ");
+                }
+                System.out.println();
+                break;
+        }
+
+    }
+
+
+
 
 
 
