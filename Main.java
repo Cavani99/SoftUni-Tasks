@@ -4,23 +4,23 @@ import java.util.stream.Collectors;
 public class Main {
 
 
-    public static void trainCommands(){
+    public static void listOperations(){
         Scanner sc = new Scanner(System.in);
 
-        List<Integer> wagons=
+        List<Integer> elements=
                 Arrays.stream(sc.nextLine().split(" "))
                         .map(Integer::parseInt).collect(Collectors.toList());
 
-        int capacity=Integer.parseInt(sc.nextLine());
         String [] command=sc.nextLine().split(" ");
         while(!command[0].equals("end")){
 
-            if(command[0].equals("Add")){
-                int passengers= Integer.parseInt(command[1]);
-                wagons.add(passengers);
-            }else{
-                int passengers= Integer.parseInt(command[0]);
-                addToWagon(wagons,capacity,passengers);
+            if(command[0].equals("Delete")){
+                int value= Integer.parseInt(command[1]);
+                deleteElement(elements,value);
+            }else if(command[0].equals("Insert")){
+                int value= Integer.parseInt(command[1]);
+                int index=Integer.parseInt(command[2]);
+                insertElement(elements,value,index);
             }
 
 
@@ -30,15 +30,21 @@ public class Main {
 
 
 
-        printElements(wagons);
+        printElements(elements);
     }
 
-    public static void addToWagon(List <Integer> wagons,int capacity,int passengers){
+    public static void insertElement(List <Integer> elements,int value,int index){
 
-        for(int i=0;i< wagons.size();i++){
-            if(wagons.get(i)+passengers<=capacity){
-                wagons.set(i, wagons.get(i)+passengers);
-                break;
+         elements.add(index,value);
+
+    }
+
+    public static void deleteElement(List <Integer> elements,int value){
+
+        for(int i=0;i< elements.size();i++){
+            if(elements.get(i)==value){
+                elements.remove(i);
+                i-=1;
             }
         }
 
@@ -60,7 +66,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        trainCommands();
+        listOperations();
 
 
     }
