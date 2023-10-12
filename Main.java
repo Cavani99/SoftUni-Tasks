@@ -1,67 +1,78 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
 
-    public static void commandsOperations(){
+    public static void listOperations(){
         Scanner sc = new Scanner(System.in);
 
-        int amountOfCommands=Integer.parseInt(sc.nextLine());
-        List <String> partyList=new ArrayList<>();
+        List<Integer> elements=
+                Arrays.stream(sc.nextLine().split(" "))
+                        .map(Integer::parseInt).collect(Collectors.toList());
 
+        String [] command=sc.nextLine().split(" ");
+        while(!command[0].equals("End")){
 
-        for(int i=0;i<amountOfCommands;i++){
-            String [] partyOperation=sc.nextLine().split(" ");
-
-            if(partyOperation[2].equals("going!")){
-                String name=partyOperation[0];
-                if(ifExists(partyList,name))
-                    System.out.printf("%s is already in the list!\n",name);
+            if(command[0].equals("Add")){
+                int value= Integer.parseInt(command[1]);
+                elements.add(value);
+            }else if(command[0].equals("Insert")){
+                int value= Integer.parseInt(command[1]);
+                int index=Integer.parseInt(command[2]);
+                if(index>= elements.size() || index<0)
+                    System.out.println("Invalid index");
                 else
-                    partyList.add(name);
-            }else{
-                String name=partyOperation[0];
-                if(ifExists(partyList,name)){
-                    deleteElement(partyList,name);
-                }else{
+                    insertElement(elements,value,index);
+            }else if(command[0].equals("Remove")){
+                int index=Integer.parseInt(command[1]);
+                if(index>= elements.size() || index<0)
+                    System.out.println("Invalid index");
+                else
+                    elements.remove(index);
+            }else if(command[0].equals("Shift")){
+                String direction=command[1];
+                int count=Integer.parseInt(command[2]);
 
-                    System.out.printf("%s is not in the list!\n",name);
-                }
-
+                shiftNumber(elements,direction,count);
             }
 
+
+            command=sc.nextLine().split(" ");
         }
 
-        printElements(partyList);
+
+
+
+        printElements(elements);
     }
 
-    public static boolean ifExists(List <String> elements,String value){
+    public static void insertElement(List <Integer> elements,int value,int index){
 
-        for (String element : elements) {
-            if (element.equals(value))
-                return true;
-        }
-
-       return false;
-    }
-
-    public static void deleteElement(List <String> elements,String value){
-
-        for(int i=0;i< elements.size();i++){
-            if(elements.get(i).equals(value)){
-                elements.remove(i);
-                break;
-            }
-        }
+        elements.add(index,value);
 
     }
 
+    public static void shiftNumber(List <Integer> elements,String direction,int count){
 
-    public static void printElements(List <String> items){
+        if(direction.equals("left")) {
+            Collections.rotate(elements,-count);
 
-            for (String item:items) {
-                System.out.println(item);
-            }
+        }
+        else if(direction.equals("right")) {
+            Collections.rotate(elements,count);
+        }
+
+
+    }
+
+
+    public static void printElements(List <Integer> items){
+
+
+        for (Integer item:items) {
+            System.out.print(item + " ");
+        }
 
 
     }
@@ -71,7 +82,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        commandsOperations();
+        listOperations();
 
 
     }
