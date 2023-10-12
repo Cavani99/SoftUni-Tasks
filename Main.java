@@ -4,35 +4,54 @@ import java.util.stream.Collectors;
 public class Main {
 
 
-    public static void removeNegative(){
+    public static void trainCommands(){
         Scanner sc = new Scanner(System.in);
 
-        List<Integer> numbers=
+        List<Integer> wagons=
                 Arrays.stream(sc.nextLine().split(" "))
                         .map(Integer::parseInt).collect(Collectors.toList());
 
+        int capacity=Integer.parseInt(sc.nextLine());
+        String [] command=sc.nextLine().split(" ");
+        while(!command[0].equals("end")){
 
-        for(int i=0;i< numbers.size();i++){
-            if(numbers.get(i)<0){
-                numbers.remove(i);
-                i-=1;
+            if(command[0].equals("Add")){
+                int passengers= Integer.parseInt(command[1]);
+                wagons.add(passengers);
+            }else{
+                int passengers= Integer.parseInt(command[0]);
+                addToWagon(wagons,capacity,passengers);
             }
+
+
+            command=sc.nextLine().split(" ");
         }
 
 
-        printElementsReverse(numbers);
+
+
+        printElements(wagons);
+    }
+
+    public static void addToWagon(List <Integer> wagons,int capacity,int passengers){
+
+        for(int i=0;i< wagons.size();i++){
+            if(wagons.get(i)+passengers<=capacity){
+                wagons.set(i, wagons.get(i)+passengers);
+                break;
+            }
+        }
+
     }
 
 
+    public static void printElements(List <Integer> items){
 
-    public static void printElementsReverse(List <Integer> items){
-        if(items.isEmpty()){
-            System.out.println("empty");
-        }else {
-            for (int i=items.size()-1;i>=0;i--) {
-                System.out.print(items.get(i) + " ");
+
+            for (Integer item:items) {
+                System.out.print(item + " ");
             }
-        }
+
 
     }
 
@@ -41,7 +60,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        removeNegative();
+        trainCommands();
 
 
     }
