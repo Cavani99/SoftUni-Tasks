@@ -1,61 +1,66 @@
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Main {
 
 
-    public static void listOperations(){
+    public static void commandsOperations(){
         Scanner sc = new Scanner(System.in);
 
-        List<Integer> elements=
-                Arrays.stream(sc.nextLine().split(" "))
-                        .map(Integer::parseInt).collect(Collectors.toList());
+        int amountOfCommands=Integer.parseInt(sc.nextLine());
+        List <String> partyList=new ArrayList<>();
 
-        String [] command=sc.nextLine().split(" ");
-        while(!command[0].equals("end")){
 
-            if(command[0].equals("Delete")){
-                int value= Integer.parseInt(command[1]);
-                deleteElement(elements,value);
-            }else if(command[0].equals("Insert")){
-                int value= Integer.parseInt(command[1]);
-                int index=Integer.parseInt(command[2]);
-                insertElement(elements,value,index);
+        for(int i=0;i<amountOfCommands;i++){
+            String [] partyOperation=sc.nextLine().split(" ");
+
+            if(partyOperation[2].equals("going!")){
+                String name=partyOperation[0];
+                if(ifExists(partyList,name))
+                    System.out.printf("%s is already in the list!\n",name);
+                else
+                    partyList.add(name);
+            }else{
+                String name=partyOperation[0];
+                if(ifExists(partyList,name)){
+                    deleteElement(partyList,name);
+                }else{
+
+                    System.out.printf("%s is not in the list!\n",name);
+                }
+
             }
 
-
-            command=sc.nextLine().split(" ");
         }
 
-
-
-
-        printElements(elements);
+        printElements(partyList);
     }
 
-    public static void insertElement(List <Integer> elements,int value,int index){
+    public static boolean ifExists(List <String> elements,String value){
 
-         elements.add(index,value);
+        for (String element : elements) {
+            if (element.equals(value))
+                return true;
+        }
 
+       return false;
     }
 
-    public static void deleteElement(List <Integer> elements,int value){
+    public static void deleteElement(List <String> elements,String value){
 
         for(int i=0;i< elements.size();i++){
-            if(elements.get(i)==value){
+            if(elements.get(i).equals(value)){
                 elements.remove(i);
-                i-=1;
+                break;
             }
         }
 
     }
 
 
-    public static void printElements(List <Integer> items){
+    public static void printElements(List <String> items){
 
-
-            for (Integer item:items) {
-                System.out.print(item + " ");
+            for (String item:items) {
+                System.out.println(item);
             }
 
 
@@ -66,7 +71,7 @@ public class Main {
 
     public static void main(String[] args) {
 
-        listOperations();
+        commandsOperations();
 
 
     }
