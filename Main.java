@@ -3,110 +3,72 @@ import java.util.stream.Collectors;
 
 public class Main {
 
+    static int sum=0;
 
     public static void getCommands() {
         Scanner sc = new Scanner(System.in);
 
-        List<String> arr =
+        List<Integer> arr =
                 Arrays.stream(sc.nextLine().split(" "))
+                        .map(Integer::parseInt)
                         .collect(Collectors.toList());
 
-        String [] command=sc.nextLine().split(" ");
-        while(!command[0].equals("3:1")){
-            if(command[0].equals("merge")){
-                int startIndex= Integer.parseInt(command[1]);
-                int endIndex= Integer.parseInt(command[2]);
-                merge(arr,startIndex,endIndex);
+        while(!arr.isEmpty()){
+            //Pokemon to catch
+            int index=Integer.parseInt(sc.nextLine());
 
-            }else if(command[0].equals("divide")){
-                int index= Integer.parseInt(command[1]);
-                int parts= Integer.parseInt(command[2]);
-                divide(arr,index,parts);
+            changeArray(arr,index);
+
+        }
+
+        System.out.println(sum);
+    }
+
+    public static void changeArray(List <Integer> arr,int index){
+
+        if(index> arr.size()-1){
+            int value=arr.get(arr.size()-1);
+            sum+=value;
+            arr.set(arr.size()-1, arr.get(0));
+
+            for (int i = 0; i < arr.size(); i++) {
+                if(arr.get(i)<=value){
+                    arr.set(i,value+arr.get(i));
+                }else if(arr.get(i)>value){
+                    arr.set(i,arr.get(i)-value);
+                }
             }
 
-            command=sc.nextLine().split(" ");
-        }
-
-        printElements(arr);
-    }
-
-    public static void merge(List <String> list,int startIndex,int endIndex){
-
-       if(endIndex>=list.size()){
-            endIndex= list.size()-1;
-        }
-
-       if(startIndex<0)
-             startIndex=0;
-
-        if(startIndex<endIndex){
-            String value="";
-            for(int i=startIndex;i<=endIndex;i++){
-                value+=list.get(i);
+        }else if(index<0){
+            int value=arr.get(0);
+            sum+=value;
+            arr.set(0, arr.get(arr.size()-1));
+            for (int i = 0; i < arr.size(); i++) {
+                if(arr.get(i)<=value){
+                    arr.set(i,value+arr.get(i));
+                }else if(arr.get(i)>value){
+                    arr.set(i,arr.get(i)-value);
+                }
             }
 
-            list.subList(startIndex, endIndex + 1).clear();
-            list.add(startIndex,value);
-        }
-    }
+        }else{
+            int value=arr.get(index);
+            sum+=value;
+            arr.remove(index);
 
-    public static void divide(List <String> list,int index,int parts) {
-         String chars=list.get(index);
-         int size=chars.length();
+            for (int i = 0; i < arr.size(); i++) {
+                if(arr.get(i)<=value){
+                    arr.set(i,value+arr.get(i));
+                }else if(arr.get(i)>value){
+                    arr.set(i,arr.get(i)-value);
+                }
+            }
 
-         if(size % parts ==0){
-             String []sub=new String[parts];
-             int ind=index;
-             int badge=0;
-             list.remove(index);
-
-             for (int i=0;i<sub.length;i++){
-                 String value="";
-                 for (int j = badge; j < size/parts+badge;j++) {
-
-                     value+=chars.charAt(j) ;
-                 }
-                 badge+=size/parts;
-                 list.add(ind,value);
-                 ind++;
-             }
-         }else{
-             String []sub=new String[parts];
-             int badge=0;
-             int ind=index;
-             list.remove(index);
-             String value="";
-
-             for (int i=0;i<sub.length-1;i++){
-                 for (int j = badge; j < size/parts+badge;j++) {
-
-                     value+=chars.charAt(j) ;
-                 }
-                 badge+=size/parts;
-                 list.add(ind,value);
-                 ind++;
-                 value="";
-             }
-
-             for (int i = badge; i < chars.length(); i++) {
-                 value+=chars.charAt(i);
-             }
-             list.add(ind,value);
-         }
-
-
-
-    }
-
-        public static void printElements(List <String> items){
-
-
-        for (String item:items) {
-            System.out.print(item + " ");
         }
 
 
     }
+
 
 
     public static void main(String[] args) {
