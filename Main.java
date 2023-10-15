@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -5,7 +6,7 @@ public class Main {
 
 
 
-    public static void getText() {
+    public static void getCarTimes() {
         Scanner sc = new Scanner(System.in);
 
         List<Integer> numbers =
@@ -13,50 +14,47 @@ public class Main {
                         .map(Integer::parseInt)
                         .collect(Collectors.toList());
 
-       List <String> text= Arrays.stream(sc.nextLine().split(""))
-               .collect(Collectors.toList());
-
-        String output="";
-
-        for (int i = 0; i < numbers.size(); i++) {
-            int sum=sumOfDigits(numbers.get(i));
-
-            if(sum<text.size()){
-                output+=text.get(sum);
-                text.remove(sum);
+        int mid=numbers.size()/2+1;
+        double leftTime=0;
+        for (int i = 0; i < mid-1; i++) {
+            if(numbers.get(i)==0){
+                leftTime*=0.8;
             }else{
-                int diff=sum-text.size();
-                while(diff>=text.size()){
-                    diff-=sum-text.size();
-                }
-                output+=text.get(diff);
-                text.remove(diff);
-
+                leftTime+= numbers.get(i);
             }
+        }
 
+        double rightTime=0;
+        for (int j = numbers.size()-1; j > mid-1; j--) {
+            if(numbers.get(j)==0){
+                rightTime*=0.8;
+            }else{
+                rightTime+= numbers.get(j);
+            }
         }
 
 
-        System.out.println(output);
+        printWinner(leftTime,rightTime);
     }
 
 
-    public static int sumOfDigits(int number){
-        String value=String.valueOf(number);
-        int sum=0;
+    public static void printWinner(double carTime1,double carTime2){
+        DecimalFormat decimalFormat = new DecimalFormat("#.0");
 
-        for (int i = 0; i < value.length(); i++) {
-            sum+= Integer.parseInt(String.valueOf(value.charAt(i)));
-        }
-
-        return sum;
+      if(carTime1<carTime2){
+          String formattedNum = decimalFormat.format(carTime1);
+          System.out.printf("The winner is left with total time: %s",formattedNum);
+      }else{
+          String formattedNum = decimalFormat.format(carTime2);
+          System.out.printf("The winner is right with total time: %s",formattedNum);
+      }
     }
 
 
 
     public static void main(String[] args) {
 
-        getText();
+        getCarTimes();
 
 
     }
