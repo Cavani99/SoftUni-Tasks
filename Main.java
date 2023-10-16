@@ -1,4 +1,5 @@
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Main {
 
@@ -7,62 +8,60 @@ public class Main {
     public static void sortLists() {
         Scanner sc = new Scanner(System.in);
 
-        String input=sc.nextLine();
 
-        List<Integer> numbers =new ArrayList<>();
-        List<Character> chars =new ArrayList<>();
+        List<Integer> numbers1 =
+                Arrays.stream(sc.nextLine().split(" "))
+                        .map(Integer::parseInt)
+                        .collect(Collectors.toList());
 
-        //make numbers and non-numbers lists;
-        for (int i = 0; i < input.length(); i++) {
-            char ch=input.charAt(i);
-            if((int)ch>=48 && (int)ch<=57){
-                numbers.add(Integer.parseInt(String.valueOf(ch)));
-            }else{
-                chars.add(ch);
-            }
+        List<Integer> numbers2 =
+                Arrays.stream(sc.nextLine().split(" "))
+                        .map(Integer::parseInt)
+                        .collect(Collectors.toList());
+
+        List<Integer> mixedList=new ArrayList<>();
+
+
+        int index1=0;
+        int index2=numbers2.size()-1;
+        while(index1< numbers1.size() && index2>=0){
+            mixedList.add(numbers1.get(index1));
+            mixedList.add(numbers2.get(index2));
+
+           numbers1.remove(index1);
+           numbers2.remove(index2);
+           index2--;
         }
 
-        //make take and skip lists from numbers;
-        List<Integer> takeList =new ArrayList<>();
-        List<Integer> skipList =new ArrayList<>();
-        for (int i = 0; i < numbers.size(); i++) {
-             if(i % 2==0){
-                 takeList.add(numbers.get(i));
-             }else{
-                 skipList.add(numbers.get(i));
-             }
+        if(!numbers1.isEmpty()){
+            printInRange(mixedList,numbers1);
+        }else{
+            printInRange(mixedList,numbers2);
         }
-
-
-        System.out.println(findString(takeList,skipList,chars));
 
     }
 
 
-    public static String findString(List<Integer> take, List<Integer> skip,  List<Character> chars){
-        String result="";
-        int index=0;
+    public static void printInRange(List<Integer> mixed, List<Integer> constraints){
+        List <Integer> range=new ArrayList<>();
+        Collections.sort(constraints);
 
-
-        for (int i=0;i< take.size();i++){
-            int takeNum=take.get(i);
-            int skipNum= skip.get(i);
-
-            if(takeNum>0){
-                for (int j = index; j < index+takeNum; j++) {
-                    if(j< chars.size())
-                     result+=chars.get(j);
-                }
-               index+=takeNum;
-            }if(skipNum>0){
-               index+=skipNum;
+        for (int i = 0; i < mixed.size(); i++) {
+            if(mixed.get(i)>constraints.get(0) && mixed.get(i)<constraints.get(1)){
+                range.add(mixed.get(i));
             }
         }
 
-
-        return result;
+        Collections.sort(range);
+        printElements(range);
     }
 
+    public static void printElements(List <Integer> items) {
+
+        for (Integer item : items) {
+            System.out.print(item + " ");
+        }
+    }
 
 
     public static void main(String[] args) {
