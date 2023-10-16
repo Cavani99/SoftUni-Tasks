@@ -4,63 +4,65 @@ import java.util.stream.Collectors;
 public class Main {
 
 
-
+    public static double budget;
     public static void sortLists() {
         Scanner sc = new Scanner(System.in);
 
 
-        List<Integer> numbers1 =
+        budget=Double.parseDouble(sc.nextLine());
+
+        List<Integer> drums =
                 Arrays.stream(sc.nextLine().split(" "))
                         .map(Integer::parseInt)
                         .collect(Collectors.toList());
 
-        List<Integer> numbers2 =
-                Arrays.stream(sc.nextLine().split(" "))
-                        .map(Integer::parseInt)
-                        .collect(Collectors.toList());
+        List<Integer> copy = new ArrayList<>(drums);
 
-        List<Integer> mixedList=new ArrayList<>();
+        String input=sc.nextLine();
 
+        while(!input.equals("Hit it again, Gabsy!")){
+            int hitPower=Integer.parseInt(input);
+            hitDrums(drums,copy,hitPower);
 
-        int index1=0;
-        int index2=numbers2.size()-1;
-        while(index1< numbers1.size() && index2>=0){
-            mixedList.add(numbers1.get(index1));
-            mixedList.add(numbers2.get(index2));
-
-           numbers1.remove(index1);
-           numbers2.remove(index2);
-           index2--;
+            input=sc.nextLine();
         }
 
-        if(!numbers1.isEmpty()){
-            printInRange(mixedList,numbers1);
-        }else{
-            printInRange(mixedList,numbers2);
-        }
+        printElements(copy,budget);
 
     }
 
 
-    public static void printInRange(List<Integer> mixed, List<Integer> constraints){
-        List <Integer> range=new ArrayList<>();
-        Collections.sort(constraints);
+    public static void hitDrums(List <Integer> initial,List<Integer> drums, int hitPower){
 
-        for (int i = 0; i < mixed.size(); i++) {
-            if(mixed.get(i)>constraints.get(0) && mixed.get(i)<constraints.get(1)){
-                range.add(mixed.get(i));
+        for (int i = 0; i < drums.size(); i++) {
+            drums.set(i, drums.get(i)-hitPower);
+
+            if(drums.get(i)<=0 && drums.get(i)!=-1000-hitPower){
+                double newBudget=budget;
+                newBudget-=initial.get(i)*3;
+
+                if(newBudget>=0){
+                    budget=newBudget;
+                    drums.set(i,initial.get(i));
+                }else{
+                    drums.set(i,-1000);
+                    i-=1;
+                }
+
             }
         }
 
-        Collections.sort(range);
-        printElements(range);
+
     }
 
-    public static void printElements(List <Integer> items) {
+    public static void printElements(List <Integer> items,double budget) {
 
         for (Integer item : items) {
-            System.out.print(item + " ");
+            if(item>0)
+                System.out.print(item + " ");
         }
+        System.out.printf("\nGabsy has %.2flv.",budget);
+
     }
 
 
