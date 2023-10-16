@@ -1,60 +1,73 @@
-import java.text.DecimalFormat;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class Main {
 
 
 
-    public static void getCarTimes() {
+    public static void sortLists() {
         Scanner sc = new Scanner(System.in);
 
-        List<Integer> numbers =
-                Arrays.stream(sc.nextLine().split(" "))
-                        .map(Integer::parseInt)
-                        .collect(Collectors.toList());
+        String input=sc.nextLine();
 
-        int mid=numbers.size()/2+1;
-        double leftTime=0;
-        for (int i = 0; i < mid-1; i++) {
-            if(numbers.get(i)==0){
-                leftTime*=0.8;
+        List<Integer> numbers =new ArrayList<>();
+        List<Character> chars =new ArrayList<>();
+
+        //make numbers and non-numbers lists;
+        for (int i = 0; i < input.length(); i++) {
+            char ch=input.charAt(i);
+            if((int)ch>=48 && (int)ch<=57){
+                numbers.add(Integer.parseInt(String.valueOf(ch)));
             }else{
-                leftTime+= numbers.get(i);
+                chars.add(ch);
             }
         }
 
-        double rightTime=0;
-        for (int j = numbers.size()-1; j > mid-1; j--) {
-            if(numbers.get(j)==0){
-                rightTime*=0.8;
-            }else{
-                rightTime+= numbers.get(j);
-            }
+        //make take and skip lists from numbers;
+        List<Integer> takeList =new ArrayList<>();
+        List<Integer> skipList =new ArrayList<>();
+        for (int i = 0; i < numbers.size(); i++) {
+             if(i % 2==0){
+                 takeList.add(numbers.get(i));
+             }else{
+                 skipList.add(numbers.get(i));
+             }
         }
 
 
-        printWinner(leftTime,rightTime);
+        System.out.println(findString(takeList,skipList,chars));
+
     }
 
 
-    public static void printWinner(double carTime1,double carTime2){
-        DecimalFormat decimalFormat = new DecimalFormat("#.0");
+    public static String findString(List<Integer> take, List<Integer> skip,  List<Character> chars){
+        String result="";
+        int index=0;
 
-      if(carTime1<carTime2){
-          String formattedNum = decimalFormat.format(carTime1);
-          System.out.printf("The winner is left with total time: %s",formattedNum);
-      }else{
-          String formattedNum = decimalFormat.format(carTime2);
-          System.out.printf("The winner is right with total time: %s",formattedNum);
-      }
+
+        for (int i=0;i< take.size();i++){
+            int takeNum=take.get(i);
+            int skipNum= skip.get(i);
+
+            if(takeNum>0){
+                for (int j = index; j < index+takeNum; j++) {
+                    if(j< chars.size())
+                     result+=chars.get(j);
+                }
+               index+=takeNum;
+            }if(skipNum>0){
+               index+=skipNum;
+            }
+        }
+
+
+        return result;
     }
 
 
 
     public static void main(String[] args) {
 
-        getCarTimes();
+        sortLists();
 
 
     }
