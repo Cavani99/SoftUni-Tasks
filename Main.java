@@ -1,30 +1,24 @@
 import java.util.*;
+import java.math.BigInteger;
 
 public class Main {
 
 
-    public static void RandomizeWords() {
+    public static void SumBigNumbers() {
         Scanner sc = new Scanner(System.in);
 
-        String [] input=sc.nextLine().split(" ");
-        Random random=new Random();
+        BigInteger num1=new BigInteger(sc.nextLine());
+        BigInteger num2=new BigInteger(sc.nextLine());
 
-        for (int i = 0; i < input.length; i++) {
-            int index= random.nextInt(input.length);
-            String value=input[i];
-            input[i]=input[index];
-            input[index]=value;
-        }
 
-        System.out.println(String.join(System.lineSeparator(),input));
-
+        System.out.println(num1.add(num2));
 
     }
 
 
     public static void main(String[] args) {
 
-        RandomizeWords();
+        SumBigNumbers();
 
 
     }
