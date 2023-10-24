@@ -41,6 +41,28 @@ public class Student {
     private int age;
     private String homeTown;
 
+    private static boolean IsStudentExisting(List <Student> students,String firstName,String lastName){
+
+        for(Student student : students){
+            if(student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)){
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static Student getStudent(List <Student> students,String firstName,String lastName){
+        Student existingStudent=null;
+
+        for(Student student : students){
+            if(student.getFirstName().equals(firstName) && student.getLastName().equals(lastName)){
+               existingStudent=student;
+            }
+        }
+
+        return existingStudent;
+    }
+
     public static void main(String[] args) {
         Scanner sc=new Scanner(System.in);
 
@@ -49,14 +71,30 @@ public class Student {
         String [] operation=sc.nextLine().split(" ");
 
         while (!operation[0].equals("end")){
-            Student student=new Student();
 
-            student.setFirstName(operation[0]);
-            student.setLastName(operation[1]);
-            student.setAge(Integer.parseInt(operation[2]));
-            student.setHomeTown(operation[3]);
+            String firstName=operation[0];
+            String lastName=operation[1];
+            int age= Integer.parseInt(operation[2]);
+            String homeTown=operation[3];
 
-            students.add(student);
+            if(IsStudentExisting(students,firstName,lastName)){
+                Student student=getStudent(students,firstName,lastName);
+
+                student.setFirstName(firstName);
+                student.setLastName(lastName);
+                student.setAge(age);
+                student.setHomeTown(homeTown);
+
+            }else {
+                Student student=new Student();
+
+                student.setFirstName(firstName);
+                student.setLastName(lastName);
+                student.setAge(age);
+                student.setHomeTown(homeTown);
+
+                students.add(student);
+            }
 
             operation=sc.nextLine().split(" ");
         }
