@@ -1,6 +1,4 @@
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 
 public class Student {
 
@@ -13,24 +11,35 @@ public class Student {
     }
 
 
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(int age) {
-        this.age = age;
-    }
-
-     public Student(String name,int age){
+     public Student(String name,String lastName,double grade){
         this.firstName=name;
-        this.age=age;
+        this.lastName=lastName;
+        this.grade=grade;
 
      }
 
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public double getGrade() {
+        return grade;
+    }
+
+    public void setGrade(double grade) {
+        this.grade = grade;
+    }
     private String firstName;
 
-    private int age;
+    private String lastName;
+
+
+    private double grade;
 
 
 
@@ -41,18 +50,18 @@ public class Student {
         List<Student> students=new ArrayList<>();
 
         int amount=Integer.parseInt(sc.nextLine());
-        for (int i = 1; i <= amount; i++) {
-            String [] info=sc.nextLine().split(" ");
 
-            Student student=new Student(info[0],Integer.parseInt(info[1]));
+        for (int i = 1; i <=amount; i++) {
+            String [] info=sc.nextLine().split(" ");
+            Student student=new Student(info[0],info[1],Double.parseDouble(info[2]));
 
             students.add(student);
-
         }
 
+         students.sort(Comparator.comparing(Student::getGrade).reversed());
+
         for (Student student:students) {
-            if(student.getAge()>30)
-                System.out.printf("%s - %d\n",student.getFirstName(),student.getAge());
+            System.out.printf("%s %s: %.2f\n",student.getFirstName(),student.getLastName(),student.getGrade());
         }
 
 
