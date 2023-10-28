@@ -6,46 +6,75 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int number=Integer.parseInt(sc.nextLine());
-        List<Car> cars=new ArrayList<>();
-        for (int i = 1; i <=number ; i++) {
-            String [] input=sc.nextLine().split(" ");
+        //get engines
+        int numberEngines=Integer.parseInt(sc.nextLine());
+        List <Engine> engines=new ArrayList<>();
+        for (int i = 1; i <=numberEngines ; i++) {
+            String [] info=sc.nextLine().split(" ");
 
-            int engineSpeed= Integer.parseInt(input[1]);
-            int enginePower= Integer.parseInt(input[2]);
+            Engine engine=new Engine(info[0],Integer.parseInt(info[1]));
 
-            int cargoWeight= Integer.parseInt(input[3]);
-            String cargoType=input[4];
+            engine.setDisplacement(-1);
+            engine.setEfficiency("n/a");
+            for (int j = 2; j < info.length ; j++) {
+                try {
+                    engine.setDisplacement(Integer.parseInt(info[j]));
+                }catch (NumberFormatException e){
+                    engine.setEfficiency(info[j]);
+                }
 
-            double tire1Press=Double.parseDouble(input[5]);
-            int tir1Age=Integer.parseInt(input[6]);
-            double tire2Press=Double.parseDouble(input[7]);
-            int tir2Age=Integer.parseInt(input[8]);
-            double tire3Press=Double.parseDouble(input[9]);
-            int tir3Age=Integer.parseInt(input[10]);
-            double tire4Press=Double.parseDouble(input[11]);
-            int tir4Age=Integer.parseInt(input[12]);
+            }
+            engines.add(engine);
+        }
 
-            Car car=new Car(input[0],new Engine(engineSpeed,enginePower)
-                    ,new Cargo(cargoWeight,cargoType),new Tire(tire1Press,tir1Age,tire2Press,tir2Age,tire3Press,tir3Age,tire4Press,tir4Age));
+        //get cars
+        int numberCars=Integer.parseInt(sc.nextLine());
+        List <Car> cars=new ArrayList<>();
+        for (int i = 1; i <=numberCars ; i++) {
+            String [] info=sc.nextLine().split(" ");
 
+            Engine engine = null;
+            for (int j = 0; j < engines.size(); j++) {
+                if(info[1].equals(engines.get(j).getModel())){
+                    engine=engines.get(j);
+                    break;
+                }
+            }
+            Car car=new Car(info[0],engine);
+
+            car.setWeight(-1);
+            car.setColor("n/a");
+            for (int k = 2; k < info.length ; k++) {
+                try {
+                    car.setWeight(Integer.parseInt(info[k]));
+                }catch (NumberFormatException e){
+                    car.setColor(info[k]);
+                }
+
+            }
             cars.add(car);
         }
 
-        String type=sc.nextLine();
+        //print cars
         for (Car car:cars) {
-            if(type.equals("fragile")){
-                if(car.getCargo().getCargoType().equals(type)
-                        && car.getTire().getTire1Pressure()<1 || car.getTire().getTire2Pressure()<1
-                        || car.getTire().getTire3Pressure()<1 || car.getTire().getTire4Pressure()<1){
-                    System.out.println(car.getModel());
-                }
-            } else if (type.equals("flamable")) {
-                if(car.getCargo().getCargoType().equals(type) &&
-                        car.getEngine().getEnginePower()>250){
-                    System.out.println(car.getModel());
-                }
-            }
+            System.out.println(car.getModel()+":");
+
+            System.out.println("  "+car.getEngine().getModel()+":");
+            System.out.printf("    Power: %d\n",car.getEngine().getEnginePower());
+
+            if(car.getEngine().getDisplacement()==-1)
+                System.out.println("    Displacement: n/a");
+            else
+                System.out.printf("    Displacement: %d\n",car.getEngine().getDisplacement());
+
+            System.out.printf("    Efficiency: %s\n",car.getEngine().getEfficiency());
+
+            if(car.getWeight()==-1)
+                System.out.println("  Weight: n/a");
+            else
+                System.out.printf("  Weight: %d\n",car.getWeight());
+
+            System.out.printf("  Color: %s\n",car.getColor());
         }
 
     }

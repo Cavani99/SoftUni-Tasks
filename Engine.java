@@ -1,11 +1,11 @@
 public class Engine {
 
-    public int getEngineSpeed() {
-        return engineSpeed;
+    public String getModel() {
+        return model;
     }
 
-    public void setEngineSpeed(int engineSpeed) {
-        this.engineSpeed = engineSpeed;
+    public void setModel(String model) {
+        this.model = model;
     }
 
     public int getEnginePower() {
@@ -16,11 +16,29 @@ public class Engine {
         this.enginePower = enginePower;
     }
 
-    private int engineSpeed;
-    private int enginePower;
+    public int getDisplacement() {
+        return displacement;
+    }
 
-    public Engine(int engineSpeed,int enginePower){
-        this.engineSpeed=engineSpeed;
+    public void setDisplacement(int displacement) {
+        this.displacement = displacement;
+    }
+
+    public String getEfficiency() {
+        return efficiency;
+    }
+
+    public void setEfficiency(String efficiency) {
+        this.efficiency = efficiency;
+    }
+
+    private String model;
+    private int enginePower;
+    private int displacement;
+    private String efficiency;
+
+    public Engine(String model,int enginePower){
+        this.model=model;
         this.enginePower=enginePower;
     }
 }

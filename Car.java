@@ -18,34 +18,34 @@ public class Car {
         this.engine = engine;
     }
 
-    public Cargo getCargo() {
-        return cargo;
+    public int getWeight() {
+        return weight;
     }
 
-    public void setCargo(Cargo cargo) {
-        this.cargo = cargo;
+    public void setWeight(int weight) {
+        this.weight = weight;
     }
 
-    public Tire getTire() {
-        return tire;
+    public String getColor() {
+        return color;
     }
 
-    public void setTire(Tire tire) {
-        this.tire = tire;
+    public void setColor(String color) {
+        this.color = color;
     }
 
     private String model;
     private Engine engine;
-    private Cargo cargo;
-    private Tire tire;
+    private int weight;
 
-    public Car(String model,Engine engine,Cargo cargo,Tire tire){
-        this.model=model;
+    private String color;
 
-        this.engine=engine;
-        this.cargo=cargo;
-        this.tire=tire;
+
+    public Car(String model, Engine engine) {
+        this.model = model;
+        this.engine = engine;
 
     }
 
 }
+
