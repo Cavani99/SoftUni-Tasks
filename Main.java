@@ -6,75 +6,97 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        //get engines
-        int numberEngines=Integer.parseInt(sc.nextLine());
-        List <Engine> engines=new ArrayList<>();
-        for (int i = 1; i <=numberEngines ; i++) {
-            String [] info=sc.nextLine().split(" ");
+        //make teams
+        int number=Integer.parseInt(sc.nextLine());
+        List <Team> teams=new ArrayList<>();
+        List <String> people=new ArrayList<>();
+        for (int i = 1; i <= number ; i++) {
+            String []info=sc.nextLine().split("-");
 
-            Engine engine=new Engine(info[0],Integer.parseInt(info[1]));
-
-            engine.setDisplacement(-1);
-            engine.setEfficiency("n/a");
-            for (int j = 2; j < info.length ; j++) {
-                try {
-                    engine.setDisplacement(Integer.parseInt(info[j]));
-                }catch (NumberFormatException e){
-                    engine.setEfficiency(info[j]);
-                }
-
-            }
-            engines.add(engine);
-        }
-
-        //get cars
-        int numberCars=Integer.parseInt(sc.nextLine());
-        List <Car> cars=new ArrayList<>();
-        for (int i = 1; i <=numberCars ; i++) {
-            String [] info=sc.nextLine().split(" ");
-
-            Engine engine = null;
-            for (int j = 0; j < engines.size(); j++) {
-                if(info[1].equals(engines.get(j).getModel())){
-                    engine=engines.get(j);
+            boolean Exists=false;
+            for (Team team:teams) {
+                if(team.getName().equals(info[1])){
+                    System.out.printf("Team %s was already created!\n",info[1]);
+                    Exists=true;
+                    break;
+                }else if(team.getCreator().equals(info[0])){
+                    System.out.printf("%s cannot create another team!\n",info[0]);
+                    Exists=true;
                     break;
                 }
             }
-            Car car=new Car(info[0],engine);
 
-            car.setWeight(-1);
-            car.setColor("n/a");
-            for (int k = 2; k < info.length ; k++) {
-                try {
-                    car.setWeight(Integer.parseInt(info[k]));
-                }catch (NumberFormatException e){
-                    car.setColor(info[k]);
-                }
+            if(Exists)
+                continue;
 
-            }
-            cars.add(car);
+            Team team=new Team(info[0],info[1]);
+            System.out.printf("Team %s has been created by %s!\n",team.getName(),team.getCreator());
+
+            people.add(team.getCreator());
+            teams.add(team);
         }
 
-        //print cars
-        for (Car car:cars) {
-            System.out.println(car.getModel()+":");
+        //add members
+        String []command=sc.nextLine().split("->");
+        while(!command[0].equals("end of assignment")){
 
-            System.out.println("  "+car.getEngine().getModel()+":");
-            System.out.printf("    Power: %d\n",car.getEngine().getEnginePower());
+            boolean teamExists=false;
+            boolean personExists=false;
+            int index=0;
+            for (Team team:teams) {
+                if (team.getName().equals(command[1])) {
+                    teamExists = true;
+                    index= teams.indexOf(team);
+                    break;
+                }
+            }
 
-            if(car.getEngine().getDisplacement()==-1)
-                System.out.println("    Displacement: n/a");
-            else
-                System.out.printf("    Displacement: %d\n",car.getEngine().getDisplacement());
+            for (String person:people) {
+                 if(person.equals(command[0])){
+                     personExists=true;
+                     break;
+                 }
+            }
 
-            System.out.printf("    Efficiency: %s\n",car.getEngine().getEfficiency());
 
-            if(car.getWeight()==-1)
-                System.out.println("  Weight: n/a");
-            else
-                System.out.printf("  Weight: %d\n",car.getWeight());
+            if(teamExists && !personExists){
+                teams.get(index).addMember(command[0]);
+                people.add(command[0]);
+            }else{
+                if(!teamExists){
+                    System.out.printf("Team %s does not exist!\n",command[1]);
+                }else {
+                    System.out.printf("Member %s cannot join team %s!\n",command[0],command[1]);
+                }
+            }
 
-            System.out.printf("  Color: %s\n",car.getColor());
+            command=sc.nextLine().split("->");
+        }
+
+        //print teams
+        teams.sort(Comparator.comparing(Team::getSize).reversed().thenComparing(Team::getName));
+        List <String> removed=new ArrayList<>();
+        for (Team team:teams) {
+            if(team.getSize()<1){
+                removed.add(team.getName());
+            }
+        }
+
+        teams.removeIf(team -> team.getSize() < 1);
+        for (Team team:teams) {
+            System.out.printf("%s\n",team.getName());
+            System.out.printf("- %s\n",team.getCreator());
+
+            Collections.sort(team.getMembers());
+            for (String person:team.getMembers()) {
+                System.out.printf("-- %s\n",person);
+            }
+        }
+
+        System.out.println("Teams to disband:");
+        Collections.sort(removed);
+        for (String team:removed) {
+            System.out.println(team);
         }
 
     }
