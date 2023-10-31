@@ -1,4 +1,3 @@
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class Main {
@@ -7,22 +6,22 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        double [] nums=Arrays.stream(sc.nextLine().split(" "))
-                .mapToDouble(Double::parseDouble)
-                .toArray();
+        int number=Integer.parseInt(sc.nextLine());
 
-        TreeMap<Double,Integer>counts=new TreeMap<>();
-        for (double num:nums) {
+        LinkedHashMap<String,ArrayList<String>> words=new LinkedHashMap<>();
+        for(int i=0;i<number;i++){
+            String word=sc.nextLine();
+            String synonym=sc.nextLine();
 
-            if(!counts.containsKey(num)){
-                counts.put(num,0);
-            }
-            counts.put(num,counts.get(num)+1);
+            words.putIfAbsent(word,new ArrayList<>());
+            words.get(word).add(synonym);
         }
 
-        for(Map.Entry<Double,Integer>entry: counts.entrySet()){
-            DecimalFormat df=new DecimalFormat("#.#######");
-            System.out.printf("%s -> %d%n",df.format(entry.getKey()),entry.getValue());
+        for(Map.Entry<String,ArrayList<String>>entry:words.entrySet()){
+
+            System.out.printf("%s - %s\n",entry.getKey(), Arrays.toString(entry.getValue().toArray())
+                    .replace("[","").replace("]",""));
         }
+
     }
 }
