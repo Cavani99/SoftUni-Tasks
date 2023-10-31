@@ -6,22 +6,27 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int number=Integer.parseInt(sc.nextLine());
+        String[] words=sc.nextLine().split(" ");
 
-        LinkedHashMap<String,ArrayList<String>> words=new LinkedHashMap<>();
-        for(int i=0;i<number;i++){
-            String word=sc.nextLine();
-            String synonym=sc.nextLine();
+        LinkedHashMap<String,Integer>counts=new LinkedHashMap<>();
 
-            words.putIfAbsent(word,new ArrayList<>());
-            words.get(word).add(synonym);
+        for(String element:words){
+
+            if(!counts.containsKey(element.toLowerCase()))
+                counts.put(element.toLowerCase(),1);
+            else
+                counts.put(element.toLowerCase(),counts.get(element.toLowerCase())+1);
+
         }
 
-        for(Map.Entry<String,ArrayList<String>>entry:words.entrySet()){
-
-            System.out.printf("%s - %s\n",entry.getKey(), Arrays.toString(entry.getValue().toArray())
-                    .replace("[","").replace("]",""));
+        ArrayList <String> print=new ArrayList<>();
+        for(Map.Entry<String,Integer>entry: counts.entrySet()){
+            if(entry.getValue() %2!=0)
+                print.add(entry.getKey());
         }
+
+        System.out.println(print.toString() .replace("[","").replace("]",""));
+
 
     }
 }
