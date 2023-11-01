@@ -6,34 +6,27 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LinkedHashMap <String,String>registered=new LinkedHashMap<>();
-        int cars=Integer.parseInt(sc.nextLine());
-        for (int i = 1; i <=cars; i++) {
-            String []command=sc.nextLine().split(" ");
-
-            if(command[0].equals("register")) {
-                if (!registered.containsKey(command[1])) {
-                    registered.put(command[1], command[2]);
-                    System.out.printf("%s registered %s successfully\n", command[1], command[2]);
-                } else {
-                    System.out.printf("ERROR: already registered with plate number %s\n",registered.get(command[1]));
-                }
+        LinkedHashMap <String,String>courses=new LinkedHashMap<>();
+        String []command=sc.nextLine().split(" : ");
+        while(!command[0].equals("end")) {
+            if(!courses.containsKey(command[0])){
+                courses.put(command[0],command[1]);
             }else{
-                if (!registered.containsKey(command[1])) {
-                    System.out.printf("ERROR: user %s not found\n",command[1]);
-                }else {
-                    registered.remove(command[1]);
-                    System.out.printf("%s unregistered successfully\n",command[1]);
-                }
+                courses.put(command[0], courses.get(command[0])+"|"+command[1]);
             }
 
+            command=sc.nextLine().split(" : ");
         }
 
 
+        for (Map.Entry<String,String>entry: courses.entrySet()){
+            String [] students=entry.getValue().split("\\|");
+            int number=students.length;
 
-        for (Map.Entry<String,String>entry: registered.entrySet()){
-
-            System.out.printf("%s => %s\n",entry.getKey(),entry.getValue());
+            System.out.printf("%s: %d\n",entry.getKey(),number);
+            for (String stud:students) {
+                System.out.printf("-- %s\n",stud);
+            }
 
         }
 
