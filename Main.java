@@ -6,41 +6,35 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LinkedHashMap <String,Double>counts=new LinkedHashMap<>();
-        LinkedHashMap <String,Integer> amount=new LinkedHashMap<>();
+        LinkedHashMap <String,String>registered=new LinkedHashMap<>();
+        int cars=Integer.parseInt(sc.nextLine());
+        for (int i = 1; i <=cars; i++) {
+            String []command=sc.nextLine().split(" ");
 
-        String [] command=sc.nextLine().split(" ");
-        while (!command[0].equals("buy")){
-            String product=command[0];
-            double price= Double.parseDouble(command[1]);
-            int quantity=Integer.parseInt(command[2]);
-
-            if(!counts.containsKey(product)){
-                counts.put(product,price);
-                amount.put(product,quantity);
-            }else {
-                counts.replace(product,price);
-                amount.put(product,amount.get(product)+quantity);
+            if(command[0].equals("register")) {
+                if (!registered.containsKey(command[1])) {
+                    registered.put(command[1], command[2]);
+                    System.out.printf("%s registered %s successfully\n", command[1], command[2]);
+                } else {
+                    System.out.printf("ERROR: already registered with plate number %s\n",registered.get(command[1]));
+                }
+            }else{
+                if (!registered.containsKey(command[1])) {
+                    System.out.printf("ERROR: user %s not found\n",command[1]);
+                }else {
+                    registered.remove(command[1]);
+                    System.out.printf("%s unregistered successfully\n",command[1]);
+                }
             }
 
-
-
-            command=sc.nextLine().split(" ");
         }
 
 
 
+        for (Map.Entry<String,String>entry: registered.entrySet()){
 
-        for (Map.Entry<String,Double>entry: counts.entrySet()){
+            System.out.printf("%s => %s\n",entry.getKey(),entry.getValue());
 
-            for (Map.Entry<String,Integer>amm: amount.entrySet()) {
-                if(amm.getKey().equals(entry.getKey())) {
-                    double total = entry.getValue() * amm.getValue();
-                    System.out.printf("%s -> %.2f\n",entry.getKey(),total);
-                    break;
-                }
-
-            }
         }
 
     }
