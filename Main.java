@@ -6,21 +6,27 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LinkedHashMap <Character,Integer>counts=new LinkedHashMap<>();
-        String text=sc.nextLine().replace(" ","");
-        for (int i = 0; i < text.length(); i++) {
-            char ch=text.charAt(i);
+        LinkedHashMap <String,Integer>counts=new LinkedHashMap<>();
+        String resource;
+        int quantity;
+        String command=sc.nextLine();
+        while(!command.equals("stop")){
+            resource=command;
+            quantity=Integer.parseInt(sc.nextLine());
 
-            if(!counts.containsKey(ch))
-                counts.put(ch,1);
+            if(!counts.containsKey(resource))
+                counts.put(resource,quantity);
             else
-                counts.put(ch,counts.get(ch)+1);
+                counts.put(resource,counts.get(resource)+quantity);
 
+
+            command=sc.nextLine();
         }
 
-        for (Map.Entry<Character,Integer>entry:counts.entrySet()){
-            System.out.printf("%c -> %d\n",entry.getKey(),entry.getValue());
+        for (Map.Entry<String,Integer>entry: counts.entrySet()){
+            System.out.printf("%s -> %d\n",entry.getKey(),entry.getValue());
         }
+
 
 
     }
