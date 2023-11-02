@@ -6,27 +6,26 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LinkedHashMap <String,String>courses=new LinkedHashMap<>();
-        String []command=sc.nextLine().split(" : ");
-        while(!command[0].equals("end")) {
-            if(!courses.containsKey(command[0])){
-                courses.put(command[0],command[1]);
+        LinkedHashMap <String,Double>students=new LinkedHashMap<>();
+        int number=Integer.parseInt(sc.nextLine());
+        for (int i = 1; i <=number ; i++) {
+            String name=sc.nextLine();
+            double grade=Double.parseDouble(sc.nextLine());
+
+            if(!students.containsKey(name)){
+                students.put(name,grade);
             }else{
-                courses.put(command[0], courses.get(command[0])+"|"+command[1]);
+                students.put(name, (students.get(name)+grade)/2);
             }
 
-            command=sc.nextLine().split(" : ");
+
         }
 
 
-        for (Map.Entry<String,String>entry: courses.entrySet()){
-            String [] students=entry.getValue().split("\\|");
-            int number=students.length;
+        for (Map.Entry<String,Double>entry: students.entrySet()){
 
-            System.out.printf("%s: %d\n",entry.getKey(),number);
-            for (String stud:students) {
-                System.out.printf("-- %s\n",stud);
-            }
+            if(entry.getValue()>=4.50)
+                System.out.printf("%s -> %.2f\n",entry.getKey(),entry.getValue());
 
         }
 
