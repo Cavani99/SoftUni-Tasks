@@ -6,53 +6,44 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LinkedHashMap <String,Integer>materials=new LinkedHashMap<>();
+        LinkedHashMap <String,String>company=new LinkedHashMap<>();
+        String []command=sc.nextLine().split(" -> ");
+        while(!command[0].equals("End")){
+            String name=command[0];
+            String id= command[1];
 
-        materials.put("shards",0);
-        materials.put("fragments",0);
-        materials.put("motes",0);
-
-        while(true) {
-
-            String []input=sc.nextLine().split(" ");
-            boolean LegendaryObtained=false;
-            for (int i = 0; i < input.length; i++) {
-                int value = Integer.parseInt(input[i]);
-                i++;
-                String material = input[i].toLowerCase();
-
-                if(!materials.containsKey(material)){
-                    materials.put(material,value);
-                }else{
-                    materials.put(material,materials.get(material)+value);
+            if(!company.containsKey(name)){
+                company.put(name,id);
+            }else{
+                String []values=company.get(name).split(" ");
+                boolean present=false;
+                for (int i = 0; i < values.length; i++) {
+                    if (values[i].equals(id)){
+                        present=true;
+                        break;
+                    }
                 }
 
-                if(materials.get(material)>=250 && material.equals("shards")){
-                    System.out.println("Shadowmourne obtained!");
-                    materials.put(material,materials.get(material.toLowerCase())-250);
-                    LegendaryObtained=true;
-                    break;
-                }else if(materials.get(material)>=250 && material.equals("fragments")){
-                    System.out.println("Valanyr obtained!");
-                    materials.put(material,materials.get(material.toLowerCase())-250);
-                    LegendaryObtained=true;
-                    break;
-                }else if(materials.get(material)>=250 && material.equals("motes")){
-                    System.out.println("Dragonwrath obtained!");
-                    materials.put(material,materials.get(material.toLowerCase())-250);
-                    LegendaryObtained=true;
-                    break;
+                if(!present){
+                    company.put(name, company.get(name)+" "+id);
                 }
-
-
             }
-            if(LegendaryObtained)
-                break;
+
+
+            command=sc.nextLine().split(" -> ");
         }
 
-        for (Map.Entry<String,Integer>entry: materials.entrySet()){
 
-            System.out.printf("%s: %d\n",entry.getKey(),entry.getValue());
+
+
+
+        for (Map.Entry<String,String>entry: company.entrySet()){
+            String [] ids= entry.getValue().split(" ");
+
+            System.out.printf("%s\n",entry.getKey());
+            for (int i = 0; i < ids.length; i++) {
+                System.out.printf("-- %s\n",ids[i]);
+            }
 
         }
 
