@@ -6,46 +6,95 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LinkedHashMap <String,String>company=new LinkedHashMap<>();
-        String []command=sc.nextLine().split(" -> ");
-        while(!command[0].equals("End")){
-            String name=command[0];
-            String id= command[1];
+        LinkedHashMap <String,String>force=new LinkedHashMap<>();
+        String ac=sc.nextLine();
 
-            if(!company.containsKey(name)){
-                company.put(name,id);
-            }else{
-                String []values=company.get(name).split(" ");
-                boolean present=false;
-                for (int i = 0; i < values.length; i++) {
-                    if (values[i].equals(id)){
-                        present=true;
-                        break;
+        List <String> users=new ArrayList<>();
+        while(!ac.equals("Lumpawaroo")){
+
+            if(ac.contains("|")){
+                String []command=ac.split(" \\| ");
+                String side=command[0];
+                String user=command[1];
+
+
+                if(!users.contains(user) && !force.containsKey(side)){
+                    force.put(side,user);
+                    users.add(user);
+                }else if(!users.contains(user)){
+                    if(force.get(side).equals(""))
+                        force.put(side,user);
+                    else
+                        force.put(side, force.get(side)+"|"+user);
+
+                    users.add(user);
+                }
+
+            } else if (ac.contains("->")) {
+                String []command=ac.split(" -> ");
+                String side=command[1];
+                String user=command[0];
+
+
+                if(!users.contains(user)) {
+                    if(!force.containsKey(side))
+                        force.put(side,user);
+                    else{
+                        if(force.get(side).equals(""))
+                            force.put(side,user);
+                        else
+                            force.put(side, force.get(side)+"|"+user);
+                    }
+
+                    users.add(user);
+                }else{
+                    for (Map.Entry<String,String>entry: force.entrySet()){
+                        if(entry.getValue().contains(user)){
+                            String newVal= Arrays.toString(entry.getValue().split("\\|?"+user))
+                                    .replace("[","")
+                                    .replace("]","");
+
+                            entry.setValue(newVal);
+                            break;
+                        }
+                    }
+
+                    if(!force.containsKey(side)){
+                        force.put(side,user);
+                    }else{
+                        if(force.get(side).equals(""))
+                            force.put(side,user);
+                        else
+                            force.put(side, force.get(side)+"|"+user);
                     }
                 }
 
-                if(!present){
-                    company.put(name, company.get(name)+" "+id);
+
+                System.out.printf("%s joins the %s side!\n",user,side);
+
+            }
+
+
+            ac=sc.nextLine();
+        }
+
+
+
+        for (Map.Entry<String,String>entry: force.entrySet()) {
+            if(entry.getValue().equals(""))
+                entry.setValue("|");
+
+            String[] forceUsers = entry.getValue().split("\\|+");
+
+
+            if (forceUsers.length >= 1) {
+                System.out.printf("Side: %s, Members: %d\n", entry.getKey(), forceUsers.length);
+
+                for (String user : forceUsers) {
+                    System.out.printf("! %s\n", user);
                 }
             }
 
-
-            command=sc.nextLine().split(" -> ");
         }
-
-
-
-
-
-        for (Map.Entry<String,String>entry: company.entrySet()){
-            String [] ids= entry.getValue().split(" ");
-
-            System.out.printf("%s\n",entry.getKey());
-            for (int i = 0; i < ids.length; i++) {
-                System.out.printf("-- %s\n",ids[i]);
-            }
-
-        }
-
     }
 }
