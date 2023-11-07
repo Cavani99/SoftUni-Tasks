@@ -6,94 +6,46 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LinkedHashMap <String,String>force=new LinkedHashMap<>();
-        String ac=sc.nextLine();
+        LinkedHashMap <String,Integer>languages=new LinkedHashMap<>();
+        LinkedHashMap <String,Integer>users=new LinkedHashMap<>();
+        String []command=sc.nextLine().split("-");
+        while(!command[0].equals("exam finished")){
+            String user=command[0];
+            if(command[1].equals("banned")){
+                users.remove(user);
+            }else{
+                String language=command[1];
+                int points= Integer.parseInt(command[2]);
 
-        List <String> users=new ArrayList<>();
-        while(!ac.equals("Lumpawaroo")){
-
-            if(ac.contains("|")){
-                String []command=ac.split(" \\| ");
-                String side=command[0];
-                String user=command[1];
-
-
-                if(!users.contains(user) && !force.containsKey(side)){
-                    force.put(side,user);
-                    users.add(user);
-                }else if(!users.contains(user)){
-                    if(force.get(side).equals(""))
-                        force.put(side,user);
-                    else
-                        force.put(side, force.get(side)+"|"+user);
-
-                    users.add(user);
+                //for username
+                if(!users.containsKey(user)){
+                    users.put(user,points);
+                }else if(users.get(user)<points){
+                    users.put(user,points);
                 }
 
-            } else if (ac.contains("->")) {
-                String []command=ac.split(" -> ");
-                String side=command[1];
-                String user=command[0];
-
-
-                if(!users.contains(user)) {
-                    if(!force.containsKey(side))
-                        force.put(side,user);
-                    else{
-                        if(force.get(side).equals(""))
-                            force.put(side,user);
-                        else
-                            force.put(side, force.get(side)+"|"+user);
-                    }
-
-                    users.add(user);
+                //for lang
+                if(!languages.containsKey(language)){
+                    languages.put(language,1);
                 }else{
-                    for (Map.Entry<String,String>entry: force.entrySet()){
-                        if(entry.getValue().contains(user)){
-                            String newVal= Arrays.toString(entry.getValue().split("\\|?"+user))
-                                    .replace("[","")
-                                    .replace("]","");
-
-                            entry.setValue(newVal);
-                            break;
-                        }
-                    }
-
-                    if(!force.containsKey(side)){
-                        force.put(side,user);
-                    }else{
-                        if(force.get(side).equals(""))
-                            force.put(side,user);
-                        else
-                            force.put(side, force.get(side)+"|"+user);
-                    }
+                    languages.put(language, languages.get(language)+1);
                 }
-
-
-                System.out.printf("%s joins the %s side!\n",user,side);
 
             }
 
-
-            ac=sc.nextLine();
+            command=sc.nextLine().split("-");
         }
 
+        //print users
+        System.out.println("Results:");
+        for (Map.Entry<String,Integer>entry: users.entrySet()) {
+            System.out.printf("%s | %d \n",entry.getKey(),entry.getValue());
 
-
-        for (Map.Entry<String,String>entry: force.entrySet()) {
-            if(entry.getValue().equals(""))
-                entry.setValue("|");
-
-            String[] forceUsers = entry.getValue().split("\\|+");
-
-
-            if (forceUsers.length >= 1) {
-                System.out.printf("Side: %s, Members: %d\n", entry.getKey(), forceUsers.length);
-
-                for (String user : forceUsers) {
-                    System.out.printf("! %s\n", user);
-                }
-            }
+        }
+        //print submissions
+        System.out.println("Submissions:");
+        for (Map.Entry<String,Integer>entry: languages.entrySet()) {
+            System.out.printf("%s - %d \n",entry.getKey(),entry.getValue());
 
         }
     }
