@@ -6,11 +6,11 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String [] input=sc.nextLine().split(" ");
-        StringBuilder output=new StringBuilder();
-        for (String result:input) {
-            output.append(result.repeat(result.length()));
+        String toRemove=sc.nextLine();
+        String input= sc.nextLine();
+        while(input.contains(toRemove)){
+            input=input.replace(toRemove,"");
         }
-        System.out.println(output);
+        System.out.println(input);
     }
 }
