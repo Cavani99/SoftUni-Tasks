@@ -6,11 +6,17 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String toRemove=sc.nextLine();
-        String input= sc.nextLine();
-        while(input.contains(toRemove)){
-            input=input.replace(toRemove,"");
+        String []banList=sc.nextLine().split(", ");
+        String text= sc.nextLine();
+        for (String word:banList) {
+
+            StringBuilder stars=new StringBuilder();
+            stars.append("*".repeat(word.length()));
+
+            while(text.contains(word)){
+                text=text.replace(word,stars);
+            }
         }
-        System.out.println(input);
+        System.out.println(text);
     }
 }
