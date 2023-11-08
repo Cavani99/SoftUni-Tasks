@@ -8,10 +8,14 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String [] text=sc.nextLine().split("\\\\");
-        String [] file=text[text.length-1].split("\\.");
-        System.out.printf("File name: %s \n",file[0]);
-        System.out.printf("File extension: %s ",file[1]);
+        String text=sc.nextLine();
+        StringBuilder shifter=new StringBuilder();
+        for (int i = 0; i < text.length(); i++) {
+            char ch= (char) (text.charAt(i)+3);
+            shifter.append(ch);
+        }
+        System.out.println(shifter);
+
 
     }
 }
