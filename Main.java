@@ -7,20 +7,33 @@ public class Main {
         Scanner sc = new Scanner(System.in);
 
         String text=sc.nextLine();
+        int explosionPower;
         StringBuilder out=new StringBuilder();
-        char compare=' ';
         for (int i = 0; i < text.length(); i++) {
-            if(i==0)
-                compare=text.charAt(i);
-            else if(text.charAt(i)!=compare){
-                out.append(compare);
-                compare=text.charAt(i);
+
+            if(text.charAt(i)=='>'){
+                out.append(text.charAt(i));
+                i++;
+                explosionPower=Integer.parseInt(String.valueOf(text.charAt(i)));
+                while(explosionPower>0 && i<text.length()) {
+                    if(text.charAt(i)=='>'){
+                        out.append(text.charAt(i));
+                        i++;
+                        explosionPower+=Integer.parseInt(String.valueOf(text.charAt(i)));
+                    }else {
+                        i++;
+                        explosionPower--;
+                    }
+                }
+                i--;
+            }else {
+                out.append(text.charAt(i));
             }
+
+
         }
 
-        out.append(compare);
         System.out.println(out);
-
 
 
     }
