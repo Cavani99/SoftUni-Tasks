@@ -3,28 +3,54 @@ import java.util.*;
 public class Main {
 
 
+     public static void printInfo(StringBuilder info){
+         StringBuilder material=new StringBuilder();
+         StringBuilder coordinates=new StringBuilder();
+         for (int i = 0; i < info.length(); i++) {
+
+             if(info.charAt(i)=='&'){
+                 i++;
+                while(info.charAt(i)!='&'){
+                    material.append(info.charAt(i));
+                    i++;
+                }
+             }else if(info.charAt(i)=='<'){
+                 i++;
+                 while(info.charAt(i)!='>'){
+                     coordinates.append(info.charAt(i));
+                     i++;
+                 }
+             }
+         }
+         System.out.printf("Found %s at %s\n",material,coordinates);
+     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int ch1=sc.nextLine().charAt(0);
-        int ch2=sc.nextLine().charAt(0);
+        int []key= Arrays.stream(sc.nextLine().split(" "))
+                .mapToInt(Integer::parseInt)
+                .toArray();
         String text=sc.nextLine();
-        int sum=0;
+        while(!text.equals("find")){
+            StringBuilder out=new StringBuilder();
+            int keyIndex=0;
 
-        for (int i = 0; i < text.length(); i++) {
-            int ch=text.charAt(i);
-            if(ch1>ch2){
-                if(ch>ch2 && ch<ch1)
-                    sum+=ch;
-            }else if(ch2>ch1){
-                if(ch>ch1 && ch<ch2)
-                    sum+=ch;
+            for (int i = 0; i < text.length(); i++) {
+                char ch=text.charAt(i);
+                if (keyIndex >= key.length) {
+                    keyIndex = 0;
+                }
+
+                ch-=key[keyIndex];
+                out.append(ch);
+                keyIndex++;
             }
 
-        }
-        System.out.println(sum);
+            printInfo(out);
 
+            text=sc.nextLine();
+        }
 
 
 
