@@ -3,55 +3,101 @@ import java.util.*;
 public class Main {
 
 
-     public static void printInfo(StringBuilder info){
-         StringBuilder material=new StringBuilder();
-         StringBuilder coordinates=new StringBuilder();
-         for (int i = 0; i < info.length(); i++) {
 
-             if(info.charAt(i)=='&'){
-                 i++;
-                while(info.charAt(i)!='&'){
-                    material.append(info.charAt(i));
-                    i++;
-                }
-             }else if(info.charAt(i)=='<'){
-                 i++;
-                 while(info.charAt(i)!='>'){
-                     coordinates.append(info.charAt(i));
-                     i++;
-                 }
-             }
-         }
-         System.out.printf("Found %s at %s\n",material,coordinates);
-     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int []key= Arrays.stream(sc.nextLine().split(" "))
-                .mapToInt(Integer::parseInt)
-                .toArray();
-        String text=sc.nextLine();
-        while(!text.equals("find")){
-            StringBuilder out=new StringBuilder();
-            int keyIndex=0;
-
-            for (int i = 0; i < text.length(); i++) {
-                char ch=text.charAt(i);
-                if (keyIndex >= key.length) {
-                    keyIndex = 0;
+        String []code=sc.nextLine().split(" ");
+        StringBuilder out=new StringBuilder();
+        for (int i = 0; i < code.length; i++) {
+            if(code[i].equals("|"))
+                out.append(" ");
+            else{
+                switch (code[i]){
+                    case ".-":
+                        out.append("A");
+                        break;
+                    case "-...":
+                        out.append("B");
+                        break;
+                    case "-.-.":
+                        out.append("C");
+                        break;
+                    case "-..":
+                        out.append("D");
+                        break;
+                    case ".":
+                        out.append("E");
+                        break;
+                    case "..-.":
+                        out.append("F");
+                        break;
+                    case "--.":
+                        out.append("G");
+                        break;
+                    case "....":
+                        out.append("H");
+                        break;
+                    case "..":
+                        out.append("I");
+                        break;
+                    case ".---":
+                        out.append("J");
+                        break;
+                    case "-.-":
+                        out.append("K");
+                        break;
+                    case ".-..":
+                        out.append("L");
+                        break;
+                    case "--":
+                        out.append("M");
+                        break;
+                    case "-.":
+                        out.append("N");
+                        break;
+                    case "---":
+                        out.append("O");
+                        break;
+                    case ".--.":
+                        out.append("P");
+                        break;
+                    case "--.-":
+                        out.append("Q");
+                        break;
+                    case ".-.":
+                        out.append("R");
+                        break;
+                    case "...":
+                        out.append("S");
+                        break;
+                    case "-":
+                        out.append("T");
+                        break;
+                    case "..-":
+                        out.append("U");
+                        break;
+                    case "...-":
+                        out.append("V");
+                        break;
+                    case ".--":
+                        out.append("W");
+                        break;
+                    case "-..-":
+                        out.append("X");
+                        break;
+                    case "-.--":
+                        out.append("Y");
+                        break;
+                    case "--..":
+                        out.append("Z");
+                        break;
                 }
-
-                ch-=key[keyIndex];
-                out.append(ch);
-                keyIndex++;
             }
-
-            printInfo(out);
-
-            text=sc.nextLine();
         }
 
+        System.out.println(out);
 
 
     }
