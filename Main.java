@@ -1,34 +1,33 @@
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 
 public class Main {
 
-    public static void putContest( LinkedHashMap<String, ArrayList<String>> contests,String company,String person,int points,
-    LinkedHashMap<String, Integer> people){
+    public static void putContest( LinkedHashMap<String, ArrayList<String>> players,String player,String role,int points,
+    LinkedHashMap<String, Integer> scores){
 
-        String result=points+"+"+person;
+        String result=points+"+"+role;
         int diff;
 
-      if(!contests.containsKey(company)){
-          contests.computeIfAbsent(company,k ->  new ArrayList<>()).add(result);
+      if(!players.containsKey(player)){
+          players.computeIfAbsent(player,k ->  new ArrayList<>()).add(result);
 
-          if(!people.containsKey(person))
-              people.put(person,points);
+          if(!scores.containsKey(player))
+              scores.put(player,points);
           else{
-              people.put(person,people.get(person)+points);
+              scores.put(player,scores.get(player)+points);
               }
       }else{
-          List <String> list=contests.get(company);
+          List <String> list=players.get(player);
           boolean userExists = false;
           for (int i = 0; i < list.size(); i++) {
               String []info=list.get(i).split("\\+");
-              if(info[1].equals(person)){
+              if(info[1].equals(role)){
                   if (Integer.parseInt(info[0]) < points) {
                       diff=points-Integer.parseInt(info[0]);
                       info[0] = String.valueOf(points);
-                      String output = points + "+" + person;
+                      String output = points + "+" + role;
                       list.set(i, output);
-                      people.put(person,people.get(person)+diff);
+                      scores.put(player,scores.get(player)+diff);
 
                       userExists = true;
                       break;
@@ -38,39 +37,55 @@ public class Main {
           }
 
           if(!userExists){
-              contests.computeIfAbsent(company ,k -> new ArrayList<>()).add(result);
+              players.computeIfAbsent(player ,k -> new ArrayList<>()).add(result);
 
-              if(!people.containsKey(person))
-                  people.put(person,points);
+              if(!scores.containsKey(player))
+                  scores.put(player,points);
               else{
-                  people.put(person,people.get(person)+points);
+                  scores.put(player,scores.get(player)+points);
               }
 
           }
       }
 
+    }
+    public static void duel(LinkedHashMap<String, ArrayList<String>> players
+            , LinkedHashMap<String, Integer> scores,String player1,String player2){
 
+        if(players.containsKey(player1) && players.containsKey(player2)){
+            List <String> list1= players.get(player1);
+            List <String> list2= players.get(player2);
+
+            for (String s : list1) {
+                String[] info = s.split("\\+");
+                for (String value : list2) {
+                    String[] info2 = value.split("\\+");
+
+                    if (info[1].equals(info2[1])) {
+                        int player1Score = scores.get(player1);
+                        int player2Score = scores.get(player2);
+
+                        if (player1Score > player2Score) {
+                            scores.remove(player2);
+                            players.remove(player2);
+                        } else if (player2Score > player1Score) {
+                            scores.remove(player1);
+                            players.remove(player1);
+                        }
+                    }
+                }
+            }
+
+        }
 
     }
 
+    public static void printContestants(LinkedHashMap<String, ArrayList<String>> players,
+                                        LinkedHashMap<String, Integer> scores){
 
-    public static void printContestants(LinkedHashMap<String, ArrayList<String>> contests,
-                                        LinkedHashMap<String, Integer> people){
 
-        AtomicInteger num = new AtomicInteger(1);
+                Map<String, Integer> map = new TreeMap<>(scores);
 
-            for (Map.Entry<String, ArrayList<String>> entry : contests.entrySet()) {
-                System.out.printf("%s: %d participants\n", entry.getKey(), entry.getValue().size());
-
-                Map<String, Integer> map = new TreeMap<>();
-                ArrayList<String> arrayList = entry.getValue();
-
-                for (String s : arrayList) {
-                    String[] info = s.split("\\+");
-                    map.put(info[1], Integer.valueOf(info[0]));
-                }
-
-                num.set(1);
                 map.entrySet().stream().sorted((e2, e1) -> {
                     int sort = Integer.compare(e1.getValue(), e2.getValue());
                     if (sort == 0) {
@@ -78,41 +93,57 @@ public class Main {
                     }
                     return sort;
 
-                }).forEach(element -> System.out.printf("%d. %s <::> %d\n", num.getAndIncrement(), element.getKey(), element.getValue()));
+                }).forEach(element ->{
+                    System.out.printf("%s: %d skill\n",element.getKey(),element.getValue());
 
-            }
+                    for (Map.Entry<String, ArrayList<String>> entry : players.entrySet()) {
 
-        num.set(1);
-        System.out.println("Individual standings: ");
-        people.entrySet().stream().sorted((e2, e1) -> {
-            int sort = Integer.compare(e1.getValue(), e2.getValue());
-            if (sort == 0) {
-                sort = e2.getKey().compareTo(e1.getKey());
-            }
-            return sort;
+                        if(element.getKey().equals(entry.getKey())){
+                            Map<String, Integer> mapRoles = new TreeMap<>();
+                            ArrayList <String> arrayList=entry.getValue();
 
-        }).forEach(element -> System.out.printf("%d. %s -> %d\n", num.getAndIncrement(), element.getKey(), element.getValue()));
+                            for (String s:arrayList) {
+                                String[] info = s.split("\\+");
+                                mapRoles.put(info[1], Integer.valueOf(info[0]));
+                            }
 
+                            mapRoles.entrySet().stream().sorted((e2,e1)->{
+                                int sort = Integer.compare(e1.getValue(), e2.getValue());
+                                if (sort == 0) {
+                                    sort = e2.getKey().compareTo(e1.getKey());
+                                }
+                                return sort;
+                            }).forEach(role -> System.out.printf("- %s <::> %d\n",role.getKey(),role.getValue()));
+                        }
+
+
+                    }
+
+                });
 
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LinkedHashMap<String, ArrayList<String>> contests = new LinkedHashMap<>();
-        LinkedHashMap<String, Integer> people = new LinkedHashMap<>();
+        LinkedHashMap<String, ArrayList<String>> players = new LinkedHashMap<>();
+        LinkedHashMap<String, Integer> scores = new LinkedHashMap<>();
 
         String[] command = sc.nextLine().split(" -> ");
-        while (!command[0].equals("no more time")) {
-            int points = Integer.parseInt(command[2]);
+        while (!command[0].equals("Season end")) {
 
-            putContest(contests,command[1],command[0],points,people);
-
+            if(command.length>2) {
+                int points = Integer.parseInt(command[2]);
+                putContest(players, command[0], command[1], points, scores);
+            }else{
+                 String [] versus=command[0].split(" vs ");
+                 duel(players,scores,versus[0],versus[1]);
+            }
 
             command = sc.nextLine().split(" -> ");
         }
 
-        printContestants(contests,people);
+        printContestants(players,scores);
 
 
     }
