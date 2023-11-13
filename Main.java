@@ -2,48 +2,44 @@ import java.util.*;
 
 public class Main {
 
-    public static void putContest( LinkedHashMap<String, ArrayList<String>> players,String name,String hat,int points,
-                                   LinkedHashMap<String, Integer> scores){
+    public static void putContest( LinkedHashMap<String, ArrayList<String>> dragons,String color,String name,
+                                   String damage, String health, String armor){
 
-        String result=points+"+"+name;
-        int diff;
+        int dmg;
+        int hp;
+        int arm;
 
-        if(!players.containsKey(hat)){
-            players.computeIfAbsent(hat,k ->  new ArrayList<>()).add(result);
+        if(damage.equals("null"))
+            dmg=45;
+        else dmg=Integer.parseInt(damage);
 
-            if(!scores.containsKey(name+":"+hat))
-                scores.put(name+":"+hat,points);
-            else if(points> scores.get(name+":"+hat)){
-                scores.put(name+":"+hat,scores.get(name+":"+hat)+points);
-            }
+        if(health.equals("null"))
+            hp=250;
+        else hp=Integer.parseInt(health);
+
+        if(armor.equals("null"))
+            arm=10;
+        else arm=Integer.parseInt(armor);
+
+        String result=name+"|"+dmg+"|"+hp+"|"+arm;
+
+        if(!dragons.containsKey(color)){
+            dragons.computeIfAbsent(color,k ->  new ArrayList<>()).add(result);
         }else{
-            List <String> list=players.get(hat);
+            List <String> list=dragons.get(color);
             boolean userExists = false;
             for (int i = 0; i < list.size(); i++) {
-                String []info=list.get(i).split("\\+");
-                if(info[1].equals(name)){
-                    if (Integer.parseInt(info[0]) < points) {
-                        diff=points-Integer.parseInt(info[0]);
-                        info[0] = String.valueOf(points);
-                        String output = points + "+" + name;
-                        list.set(i, output);
-                        scores.put(name+":"+hat,scores.get(name+":"+hat)+diff);
-
-                        userExists = true;
-                        break;
-                    }
+                String []info=list.get(i).split("\\|");
+                if(info[0].equals(name)){
+                    String output =name+"|"+dmg+"|"+hp+"|"+arm;
+                    list.set(i, output);
                     userExists = true;
+                    break;
                 }
             }
 
             if(!userExists){
-                players.computeIfAbsent(hat ,k -> new ArrayList<>()).add(result);
-
-                if(!scores.containsKey(name+":"+hat))
-                    scores.put(name+":"+hat,points);
-                else if(points> scores.get(name+":"+hat)){
-                    scores.put(name+":"+hat,points);
-                }
+                dragons.computeIfAbsent(color ,k -> new ArrayList<>()).add(result);
 
             }
         }
@@ -51,83 +47,56 @@ public class Main {
     }
 
 
-    public static void printContestants(LinkedHashMap<String, ArrayList<String>> players,
-                                        LinkedHashMap<String, Integer> scores,  List <String> score){
+    public static void printContestants(LinkedHashMap<String, ArrayList<String>> dragons){
 
 
-        Map<String, Integer> map = new TreeMap<>(scores);
-        LinkedHashMap <String,Integer> colorCount=new LinkedHashMap<>();
-        for (Map.Entry<String, ArrayList<String>> entry : players.entrySet()){
-            String colors=entry.getKey();
-            int count=entry.getValue().size();
-            if(!colorCount.containsKey(colors)){
-                colorCount.put(colors,count);
+        for (Map.Entry<String, ArrayList<String>> entry : dragons.entrySet()){
+            double avgDmg=0;
+            double avgHp=0;
+            double avgArm=0;
+            int size=entry.getValue().size();
+            ArrayList<String>list=entry.getValue();
+            for (String string:list) {
+                String [] getInfo=string.split("\\|");
+                avgDmg+=Integer.parseInt(getInfo[1]);
+                avgHp+=Integer.parseInt(getInfo[2]);
+                avgArm+=Integer.parseInt(getInfo[3]);
             }
+
+            System.out.printf("%s::(%.2f/%.2f/%.2f)\n",entry.getKey()
+                    ,avgDmg/size,avgHp/size,avgArm/size);
+            list.stream().sorted((e1,e2)->{
+                String [] getInfo1=e1.split("\\|");
+                String [] getInfo2=e2.split("\\|");
+
+                return getInfo1[0].compareTo(getInfo2[0]);
+            }).forEach(element ->{
+                String [] info=element.split("\\|");
+
+                System.out.printf("-%s -> damage: %s, health: %s, armor: %s\n"
+                        ,info[0],info[1],info[2],info[3]);
+
+            });
+
+
         }
-
-        map.entrySet().stream().sorted((e1, e2) -> {
-
-            int sort = -Integer.compare(e1.getValue(), e2.getValue());
-            if (sort == 0) {
-                String [] info1=e1.getKey().split(":");
-                String [] info2=e2.getKey().split(":");
-                int color1size=0;
-                int color2size=0;
-
-                if(colorCount.containsKey(info1[1]))
-                    color1size=colorCount.get(info1[1]);
-                if(colorCount.containsKey(info2[1]))
-                    color2size=colorCount.get(info2[1]);
-
-
-                sort=-Integer.compare(color1size,color2size);
-                if(sort==0){
-
-                    int ind1=score.indexOf(e1.getKey());
-                    int ind2=score.indexOf(e2.getKey());sort=Integer.compare(ind1,ind2);
-
-                }
-
-
-
-            }
-
-            return sort;
-
-        }).forEach(element ->{
-
-
-            String []info=element.getKey().split(":");
-            System.out.printf("(%s) %s <-> %d\n",info[1],info[0],element.getValue());
-
-
-        });
 
     }
 
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        LinkedHashMap<String, ArrayList<String>> dwarves = new LinkedHashMap<>();
-        LinkedHashMap<String, Integer> scores = new LinkedHashMap<>();
-        List <String> score=new ArrayList<>();
+        LinkedHashMap<String, ArrayList<String>> dragons = new LinkedHashMap<>();
 
-        String[] command = sc.nextLine().split(" <:> ");
-        while (!command[0].equals("Once upon a time")) {
+        int number=Integer.parseInt(sc.nextLine());
+        for (int i = 0; i < number; i++) {
+            String[] command = sc.nextLine().split(" ");
 
-            int points = Integer.parseInt(command[2]);
-            putContest(dwarves, command[0], command[1], points, scores);
+            putContest(dragons,command[0],command[1],command[2],command[3],command[4]);
 
-            if(!score.contains(command[0]+":"+command[1])){
-                score.add(command[0]+":"+command[1]);
-            }
-
-
-            command = sc.nextLine().split(" <:> ");
         }
 
-        printContestants(dwarves,scores,score);
-
+        printContestants(dragons);
 
     }
 }
