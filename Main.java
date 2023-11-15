@@ -8,18 +8,21 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        ArrayList <String>matched=new ArrayList<>();
         String input=sc.nextLine();
-        String regex="\\+359([- ])2\\1[\\d]{3}\\1[\\d]{4}\\b";
+        String regex="\\b(?<day>\\d{2})([-/.\\\\])(?<month>[A-Z][a-z]{2})\\2(?<year>\\d{4})\\b";
 
         Pattern pattern= Pattern.compile(regex);
         Matcher matcher=pattern.matcher(input);
 
         while(matcher.find()){
-            matched.add(matcher.group());
+          String day=matcher.group("day");
+          String month=matcher.group("month");
+          String year=matcher.group("year");
+
+            System.out.printf("Day: %s, Month: %s, Year: %s\n",day,month,year);
         }
 
-        System.out.println(String.join(", ",matched));
+
 
     }
 }
