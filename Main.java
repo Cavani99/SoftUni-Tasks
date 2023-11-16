@@ -8,50 +8,49 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
+        String [] input=sc.nextLine().split(", *");
+        for (int i = 0; i < input.length; i++) {
+            int health = 0;
+            double damage = 0;
 
-        int number=Integer.parseInt(sc.nextLine());
-        ArrayList <String> attacked=new ArrayList<>();
-        ArrayList <String> destroyed=new ArrayList<>();
+            StringBuilder hp = new StringBuilder();
 
-        for (int i = 0; i < number; i++) {
-            String input=sc.nextLine();
 
-            String regex="[star]*[STAR]*";
-            Pattern pattern= Pattern.compile(regex);
-            Matcher matcher=pattern.matcher(input);
-            String len="";
-            while(matcher.find()) {
-                len+= matcher.group();
+            String regex = "([^0-9+\\-*/.\\s,])";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(input[i]);
+
+            while (matcher.find()) {
+                hp.append(matcher.group());
             }
-            int size=len.length();
 
-            StringBuilder decrypted= new StringBuilder();
-            for (int j = 0; j < input.length(); j++) {
-                char ch=input.charAt(j);
-                ch-=size;
-                decrypted.append(ch);
+            for (int j = 0; j < hp.length(); j++) {
+                int ch = hp.charAt(j);
+                health += ch;
             }
-            regex="[^@\\-!:>]*@(?<planet>[A-Z][a-z]*)[^@\\-!:>]*:(?<population>\\d*)[^@\\-!:>]*!(?<event>[ADad]{1})![^@\\-!:>]*->(?<soldiers>\\d+)[^@\\-!:>]*";
-            pattern= Pattern.compile(regex);
-            matcher=pattern.matcher(decrypted);
-            if(matcher.find()){
-                if(matcher.group("event").equals("A")){
-                    attacked.add(matcher.group("planet"));
-                }else
-                    destroyed.add(matcher.group("planet"));
-            }
-        }
-        Collections.sort(attacked);
-        Collections.sort(destroyed);
-        System.out.printf("Attacked planets: %d\n",attacked.size());
-        for (String planet:attacked) {
-            System.out.printf("-> %s\n",planet);
-        }
-        System.out.printf("Destroyed planets: %d\n",destroyed.size());
-        for (String planet:destroyed) {
-            System.out.printf("-> %s\n",planet);
-        }
 
+            regex = "([+-]?\\d+[.]?\\d+)|[+-]?[0-9]";
+            pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(input[i]);
+            String dmg;
+            while (matcher.find()) {
+                dmg = matcher.group();
+                damage += Double.parseDouble(dmg);
+            }
+            regex = "[*/]";
+            pattern = Pattern.compile(regex);
+            matcher = pattern.matcher(input[i]);
+            while (matcher.find()) {
+                dmg = matcher.group();
+                if(dmg.equals("*"))
+                    damage*=2;
+                else
+                    damage/=2;
+            }
+
+            System.out.printf("%s - %d health, %.2f damage\n", input[i].replaceAll(" ",""), health, damage);
+
+        }
 
     }
 }
