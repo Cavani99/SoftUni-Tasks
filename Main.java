@@ -8,21 +8,24 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String input=sc.nextLine();
-        String regex="\\b(?<day>\\d{2})([-/.\\\\])(?<month>[A-Z][a-z]{2})\\2(?<year>\\d{4})\\b";
+        String regex="(>>)(?<furniture>\\w+)(<<)(?<price>\\d+[.]?\\d+)!(?<quantity>\\d+)\\b";
 
         Pattern pattern= Pattern.compile(regex);
-        Matcher matcher=pattern.matcher(input);
 
-        while(matcher.find()){
-          String day=matcher.group("day");
-          String month=matcher.group("month");
-          String year=matcher.group("year");
+        double sum=0;
+        String input=sc.nextLine();
 
-            System.out.printf("Day: %s, Month: %s, Year: %s\n",day,month,year);
+        System.out.println("Bought furniture:");
+        while(!input.equals("Purchase")){
+            Matcher matcher=pattern.matcher(input);
+            if(matcher.find()){
+                System.out.printf("%s\n",matcher.group("furniture"));
+                sum+=Double.parseDouble(matcher.group("price"))*Integer.parseInt(matcher.group("quantity"));
+            }
+
+            input=sc.nextLine();
         }
-
-
+        System.out.printf("Total money spend: %.2f",sum);
 
     }
 }
