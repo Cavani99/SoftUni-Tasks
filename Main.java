@@ -8,14 +8,39 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String  input=sc.nextLine();
-        String regex = "(?<user>[0-9A-Za-z]+([.\\-_]?[0-9A-Za-z])+)@(?<host>(([A-Za-z]+(-]?[0-9A-Za-z])*)+(\\.{1}[A-Za-z]+(-]?[0-9A-Za-z])*)*))";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(input);
+        int number=Integer.parseInt(sc.nextLine());
+        for (int i = 0; i < number; i++) {
+            String  input=sc.nextLine();
+            String regex = "_\\.+[A-Z]+[A-Za-z0-9]{4,}[A-Z]+_\\.+";
+            Pattern pattern = Pattern.compile(regex);
+            Matcher matcher = pattern.matcher(input);
+            StringBuilder string=new StringBuilder();
 
-        while(matcher.find()){
-            System.out.printf("%s@%s\n",matcher.group("user"),matcher.group("host"));
+            while(matcher.find()){
+                string.append(matcher.group());
+            }
+            if(string.toString().equals("")){
+                System.out.println("Invalid pass!");
+            }else {
+                regex = "[0-9]+";
+                pattern = Pattern.compile(regex);
+                matcher = pattern.matcher(input);
+                StringBuilder num = new StringBuilder();
+
+                while (matcher.find()) {
+                    num.append(matcher.group());
+                }
+                if(num.toString().equals("")){
+                    System.out.println("Group: default");
+                }else{
+                    System.out.println("Group: "+num);
+                }
+            }
+
+
+
         }
+
 
 
     }
