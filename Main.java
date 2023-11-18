@@ -8,40 +8,59 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        int number=Integer.parseInt(sc.nextLine());
-        for (int i = 0; i < number; i++) {
-            String  input=sc.nextLine();
-            String regex = "_\\.+[A-Z]+[A-Za-z0-9]{4,}[A-Z]+_\\.+";
+        String [] tickets=sc.nextLine().split(", +");
+        for (int i = 0; i < tickets.length; i++) {
+            String ticket=tickets[i].replaceAll(" ","");
+
+            String regex = ".{20,}";
             Pattern pattern = Pattern.compile(regex);
-            Matcher matcher = pattern.matcher(input);
-            StringBuilder string=new StringBuilder();
-
-            while(matcher.find()){
-                string.append(matcher.group());
+            Matcher matcher = pattern.matcher(ticket);
+            String size="";
+            if(matcher.find()){
+               size=matcher.group();
             }
-            if(string.toString().equals("")){
-                System.out.println("Invalid pass!");
-            }else {
-                regex = "[0-9]+";
+            matcher = pattern.matcher(ticket);
+            if (matcher.find() && size.length()==20){
+                String symbols1="";
+                String symbols2=".";
+
+                String subString1=ticket.substring(0,10);
+                String subString2=ticket.substring(subString1.length());
+
+                regex = "(\\${6,10}|@{6,10}|#{6,10}|\\^{6,10})";
                 pattern = Pattern.compile(regex);
-                matcher = pattern.matcher(input);
-                StringBuilder num = new StringBuilder();
+                matcher = pattern.matcher(subString1);
+                while (matcher.find()){
+                    symbols1= matcher.group();
 
-                while (matcher.find()) {
-                    num.append(matcher.group());
                 }
-                if(num.toString().equals("")){
-                    System.out.println("Group: default");
-                }else{
-                    System.out.println("Group: "+num);
+                matcher = pattern.matcher(subString2);
+                while (matcher.find()){
+                    symbols2= matcher.group();
                 }
+
+                if(symbols1.equals(symbols2)){
+                    char ch=symbols1.charAt(0);
+                    if(symbols1.length()>=6 && symbols1.length()<=9){
+                        System.out.printf("ticket \"%s\" - %d%c\n",ticket,symbols1.length(),ch);
+                    }else if(symbols1.length()==10)
+                        System.out.printf("ticket \"%s\" - %d%c Jackpot!\n",ticket,symbols1.length(),ch);
+
+                } else if (symbols1.length()<symbols2.length() && !symbols1.equals("") && symbols1.charAt(0)==symbols2.charAt(0)) {
+                    char ch=symbols1.charAt(0);
+                    System.out.printf("ticket \"%s\" - %d%c\n",ticket,symbols1.length(),ch);
+
+                }else if (symbols2.length()<symbols1.length() && !symbols2.equals(".") && symbols1.charAt(0)==symbols2.charAt(0)) {
+                    char ch=symbols2.charAt(0);
+                    System.out.printf("ticket \"%s\" - %d%c\n",ticket,symbols2.length(),ch);
+
+                }
+                else System.out.printf("ticket \"%s\" - no match\n",ticket);
+
             }
-
-
-
+           else{
+                System.out.println("invalid ticket");
+           }
         }
-
-
-
     }
 }
