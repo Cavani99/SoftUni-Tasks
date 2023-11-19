@@ -8,38 +8,52 @@ public class Main {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
 
-        String text=sc.nextLine();
-        StringBuilder rage=new StringBuilder();
-        String unique="";
-        int uniqueSymbols=0;
+        String [] text=sc.nextLine().split("\\|");
 
-        String regex = "(?<symbols>\\D+)(?<num>\\d+)";
+        //part 1
+        String regex = "([#$%*&])(?<first>[A-Z]+)\\1";
         Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(text);
+        Matcher matcher = pattern.matcher(text[0]);
+        String firstPart="";
 
 
         while(matcher.find()){
+            firstPart=matcher.group("first");
+        }
 
-            String result= matcher.group("symbols");
-            int amount= Integer.parseInt(matcher.group("num"));
+        //part 2
+        LinkedHashMap<Character,Integer>secondPart=new LinkedHashMap<>();
+        regex="(?<char>\\d{2}):(?<length>\\d{2})";
+        pattern=Pattern.compile(regex);
+        matcher=pattern.matcher(text[1]);
+        while (matcher.find()){
+            int ch= Integer.parseInt(String.valueOf(matcher.group("char")));
+            char carh= (char) ch;
+            int len= Integer.parseInt(matcher.group("length"));
 
-            rage.append(result.toUpperCase().repeat(Math.max(0, amount)));
-            if(amount>0){
-                for (int i = 0; i < result.length(); i++) {
-                    String ch=String.valueOf(result.charAt(i)).toUpperCase();
-                    if(!unique.contains(ch)){
-                        uniqueSymbols++;
-                        unique+=ch;
-                    }
+            if(firstPart.contains(String.valueOf(carh)))
+                secondPart.put(carh,len+1);
+        }
 
+        //part 3
+        String []info = new String[0];
+        regex="(?<third>[\\w\\d\\S ]+)";
+        pattern=Pattern.compile(regex);
+        matcher=pattern.matcher(text[2]);
+        while (matcher.find()){
+            info=matcher.group("third").split(" +");
+        }
+
+        for (int j = 0; j < firstPart.length(); j++) {
+            char symbol=firstPart.charAt(j);
+            for (String s : info) {
+                if (s.startsWith(String.valueOf(symbol)) && s.length() == secondPart.get(symbol)) {
+                    System.out.println(s);
+                    break;
                 }
             }
         }
-
-
-        System.out.printf("Unique symbols used: %d\n",uniqueSymbols);
-        System.out.println(rage);
-
+     
 
     }
 }
